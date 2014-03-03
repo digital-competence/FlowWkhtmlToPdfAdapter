@@ -116,14 +116,17 @@ class PdfView extends \TYPO3\Flow\Mvc\View\AbstractView {
 
     protected $dpi = 96;
 
-	public function __construct(array $options = array()) {
-		var_dump($this->supportedOptions);
-		die();
-		$this->headView = new \DigiComp\FlowWkhtmlToPdfAdapter\View\Pdf\HeadView($options);
+	public function __construct() {
+		#var_dump($this->supportedOptions);
+		#die();
+		/*$this->headView = new \DigiComp\FlowWkhtmlToPdfAdapter\View\Pdf\HeadView($options);
 		$this->bodyView = new \DigiComp\FlowWkhtmlToPdfAdapter\View\Pdf\BodyView($options);
-		$this->footView = new \DigiComp\FlowWkhtmlToPdfAdapter\View\Pdf\FootView($options);
+		$this->footView = new \DigiComp\FlowWkhtmlToPdfAdapter\View\Pdf\FootView($options);*/
 
-		return parent::__construct($options);
+		$this->headView = new \DigiComp\FlowWkhtmlToPdfAdapter\View\Pdf\HeadView();
+		$this->bodyView = new \DigiComp\FlowWkhtmlToPdfAdapter\View\Pdf\BodyView();
+		$this->footView = new \DigiComp\FlowWkhtmlToPdfAdapter\View\Pdf\FootView();
+
 	}
 
 
@@ -212,7 +215,7 @@ class PdfView extends \TYPO3\Flow\Mvc\View\AbstractView {
 			}
 		}
 		if ($returnVar && !file_exists($fileName))
-			throw new \DigiComp\Controls\View\RenderException('wkhtmltopdf could not render your HTML. Command: '
+			throw new RenderException('wkhtmltopdf could not render your HTML. Command: '
 				. $this->binPath . ' ' . join(" ", $arguments) . ' Code: '. $returnVar .' Result: '
 				. join(" ", $result));
 		return $fileName;
