@@ -4,7 +4,8 @@
     "description":"",
     "require":{
         "typo3/flow":"~2.0.0",
-        "knplabs/knp-snappy": "~0.1"
+        "knplabs/knp-snappy": "~0.2",
+        "symfony/process": "~2.4"
     },
     "require-dev":{
         "phpunit/phpunit": "~3.7.0"
