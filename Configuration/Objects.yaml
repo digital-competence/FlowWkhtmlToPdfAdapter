@@ -1,29 +1,9 @@
-
-DigiComp\FlowWkhtmlToPdfAdapter\View\Pdf\BodyView:
+DigiComp\FlowWkhtmlToPdfAdapter\Snappy\Pdf:
+  arguments:
+    1:
+      setting: DigiComp.FlowWkhtmlToPdfAdapter.binary.pdf
+    2:
+      setting: DigiComp.FlowWkhtmlToPdfAdapter.defaultSettings
   properties:
-    renderingContext:
-      object: TYPO3\Fluid\Core\Rendering\RenderingContext
-
-DigiComp\FlowWkhtmlToPdfAdapter\View\Pdf\FootView:
-  properties:
-    renderingContext:
-      object: TYPO3\Fluid\Core\Rendering\RenderingContext
-
-DigiComp\FlowWkhtmlToPdfAdapter\View\Pdf\HeadView:
-  properties:
-    renderingContext:
-      object: TYPO3\Fluid\Core\Rendering\RenderingContext
-
-
-DigiComp\FlowWkhtmlToPdfAdapter\View\PdfView:
-  properties:
-    marginTop:
-      setting: DigiComp.Controls.PdfView.Margins.Top
-    marginBottom:
-      setting: DigiComp.Controls.PdfView.Margins.Bottom
-    marginRight:
-      setting: DigiComp.Controls.PdfView.Margins.Right
-    marginLeft:
-      setting: DigiComp.Controls.PdfView.Margins.Left
-    keepTmpFiles:
-      value: 0
+    useXvfb:
+      setting: DigiComp.FlowWkhtmlToPdfAdapter.useXvfb

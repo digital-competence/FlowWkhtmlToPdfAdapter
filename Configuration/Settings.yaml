@@ -1,3 +1,9 @@
+DigiComp:
+  FlowWkhtmlToPdfAdapter:
+    binary:
+      pdf: '/usr/bin/wkhtmltopdf'
+    useXvfb: TRUE
+
 TYPO3:
   Flow:
     object:
