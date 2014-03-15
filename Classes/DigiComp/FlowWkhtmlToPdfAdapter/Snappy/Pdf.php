@@ -22,8 +22,20 @@ class Pdf extends \Knp\Snappy\Pdf {
 	 */
 	protected $xvfbUtility;
 
-	public function __construct($binary = null, array $options = array(), array $env = array()) {
+	/**
+	 * @param null $binary
+	 * @param array $options
+	 * @param array $env
+	 */
+	public function __construct($binary = null, $options = array(), $env = array()) {
 		$this->setDefaultExtension('pdf');
+
+		if (is_null($options)) {
+			$options = array();
+		}
+		if (is_null($env)) {
+			$env = array();
+		}
 
 		AbstractGenerator::__construct($binary, $options, $env);
 	}
