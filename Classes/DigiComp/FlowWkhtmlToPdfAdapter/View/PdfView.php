@@ -44,7 +44,7 @@ class PdfView extends \TYPO3\Flow\Mvc\View\AbstractView {
 		'footTemplatePathAndFilenamePattern', 'dpi'
 	);
 
-	protected $optionsToPdfTranslation = array(
+	public static $optionsToPdfTranslation = array(
 		'orientation' => 'orientation',
 		'marginLeft' => 'margin-left',
 		'marginRight' => 'margin-right',
@@ -111,28 +111,11 @@ class PdfView extends \TYPO3\Flow\Mvc\View\AbstractView {
 	}
 
 	public function render() {
-		$prefix = uniqid();
-		$tmpPath = $this->environment->getPathToTemporaryDirectory();
-		$fileName = $tmpPath . $prefix . '.pdf';
+        $prefix = uniqid();
+        $tmpPath = $this->environment->getPathToTemporaryDirectory();
+        $fileName = $tmpPath . $prefix . '.pdf';
 
-		$this->headView->assignMultiple($this->variables);
-		$this->bodyView->assignMultiple($this->variables);
-		$this->footView->assignMultiple($this->variables);
-
-		$pdf = new Pdf;
-
-		if ($this->headView->canRender($this->controllerContext)) {
-			$pdf->setOption('header-html', $this->headView->render());
-		}
-		if ($this->footView->canRender($this->controllerContext)) {
-			$pdf->setOption('footer-html', $this->footView->render());
-		}
-
-		foreach($this->optionsToPdfTranslation as $source => $target) {
-			$pdf->setOption($target, $this->options[$source]);
-		}
-
-		$pdf->generateFromHtml($this->bodyView->render(), $fileName);
+        $this->generateFile($fileName);
 
 		$sendFileName = isset($this->variables['pdfFileName']) ? $this->variables['pdfFileName'] : basename($fileName);
 		$this->controllerContext->getResponse()->setHeader('Content-Type', 'application/pdf', TRUE);
@@ -149,5 +132,27 @@ class PdfView extends \TYPO3\Flow\Mvc\View\AbstractView {
 		$this->bodyView->setControllerContext($controllerContext);
 		$this->footView->setControllerContext($controllerContext);
 	}
+
+    protected function generateFile($fileName){
+        $this->headView->assignMultiple($this->variables);
+        $this->bodyView->assignMultiple($this->variables);
+        $this->footView->assignMultiple($this->variables);
+
+        $pdf = new Pdf;
+
+        if ($this->headView->canRender($this->controllerContext)) {
+            $pdf->setOption('header-html', $this->headView->render());
+        }
+        if ($this->footView->canRender($this->controllerContext)) {
+            $pdf->setOption('footer-html', $this->footView->render());
+        }
+
+        foreach(static::$optionsToPdfTranslation as $source => $target) {
+            $pdf->setOption($target, $this->options[$source]);
+        }
+
+        $pdf->generateFromHtml($this->bodyView->render(), $fileName);
+
+    }
 
 }
