@@ -2,12 +2,13 @@
 namespace DigiComp\FlowWkhtmlToPdfAdapter\View;
 use DigiComp\FlowWkhtmlToPdfAdapter\Snappy\Pdf;
 use TYPO3\Flow\Annotations as Flow;
+use TYPO3\Flow\Mvc\View\AbstractView;
 use TYPO3\Fluid\View\TemplateView;
 
 /*                                                                              *
  * This script belongs to the FLOW3 package "DigiComp.FlowWkhtmlToPdfAdapter".  *
  *                                                                              */
-class PdfView extends \TYPO3\Flow\Mvc\View\AbstractView {
+class PdfView extends AbstractView {
 
 	/**
 	 * @var array

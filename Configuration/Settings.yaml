@@ -2,7 +2,7 @@ DigiComp:
   FlowWkhtmlToPdfAdapter:
     binary:
       pdf: '/usr/bin/wkhtmltopdf'
-    useXvfb: TRUE
+    useXvfb: FALSE
 
 TYPO3:
   Flow:
