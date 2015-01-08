@@ -122,9 +122,9 @@ class PdfView extends AbstractView {
 		$this->controllerContext->getResponse()->setHeader('Content-Type', 'application/pdf', TRUE);
 		$this->controllerContext->getResponse()->setHeader('Content-Disposition', sprintf('attachment; filename="%s"', $sendFileName));
 		$this->controllerContext->getResponse()->send();
-		readfile($fileName);
+		$content = file_get_contents($fileName);
 		unlink($fileName);
-		return '';
+		return $content;
 	}
 
 	public function setControllerContext(\TYPO3\Flow\Mvc\Controller\ControllerContext $controllerContext) {
