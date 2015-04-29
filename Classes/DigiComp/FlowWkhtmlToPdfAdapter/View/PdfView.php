@@ -8,6 +8,12 @@ use TYPO3\Fluid\View\TemplateView;
 /*                                                                              *
  * This script belongs to the FLOW3 package "DigiComp.FlowWkhtmlToPdfAdapter".  *
  *                                                                              */
+
+/**
+ * PdfView connects up to three templates to generate a PDF using wkhtmltopdf
+ *
+ * @package DigiComp\FlowWkhtmlToPdfAdapter\View
+ */
 class PdfView extends AbstractView {
 
 	/**

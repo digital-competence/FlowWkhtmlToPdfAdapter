@@ -1,23 +1,33 @@
 {
-    "name":"digicomp/flowwkhtmltopdfadapter",
-    "type":"typo3-flow-package",
-    "description":"",
-    "require":{
-        "typo3/flow":"~2.1",
-        "knplabs/knp-snappy": "~0.2",
-        "symfony/process": "~2.4"
-    },
-    "require-dev":{
-        "phpunit/phpunit": "~3.7.0"
-    },
-    "autoload":{
-        "psr-0":{
-            "DigiComp\\FlowWkhtmlToPdfAdapter":"Classes"
-        }
-    },
-    "extra": {
-        "branch-alias": {
-            "dev-master": "1.1.x-dev"
-        }
+  "name": "digicomp/flowwkhtmltopdfadapter",
+  "type": "typo3-flow-package",
+  "authors": [
+    {
+      "name": "Ferdinand Kuhl",
+      "email": "f.kuhl@digital-competence.de",
+      "homepage": "http://www.digital-competence.de",
+      "role": "Developer"
     }
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/fcool/DigiComp.SettingValidator",
+  "keywords": ["Flow","wkhtmlttopdf","pdf"],
+  "require": {
+    "typo3/flow": "~2.1",
+    "knplabs/knp-snappy": "~0.2",
+    "symfony/process": "~2.4"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "~3.7.0"
+  },
+  "autoload": {
+    "psr-0": {
+      "DigiComp\\FlowWkhtmlToPdfAdapter": "Classes"
+    }
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.1.x-dev"
+    }
+  }
 }

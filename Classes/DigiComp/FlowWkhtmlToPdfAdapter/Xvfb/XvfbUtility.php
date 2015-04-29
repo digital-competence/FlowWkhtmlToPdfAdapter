@@ -36,7 +36,7 @@ class XvfbUtility {
 	protected $processes = array();
 
 	protected function getFreeXDisplay() {
-		//Well this is really optimistic "free" We could check if it is really free with "xset q"
+		//TODO: Well this is really optimistic "free" We could check if it is really free with "xset q"
 		$xdisplay = rand($this->minXDisplay, $this->maxXDisplay);
 		return $xdisplay;
 	}
