@@ -13,7 +13,7 @@
   "homepage": "https://github.com/fcool/DigiComp.SettingValidator",
   "keywords": ["Flow","wkhtmlttopdf","pdf"],
   "require": {
-    "typo3/flow": "~2.1",
+    "typo3/flow": "~2.1|~3.0",
     "knplabs/knp-snappy": "~0.2",
     "symfony/process": "~2.4"
   },
