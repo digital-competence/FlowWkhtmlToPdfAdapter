@@ -3,6 +3,7 @@ namespace DigiComp\FlowWkhtmlToPdfAdapter\View;
 use DigiComp\FlowWkhtmlToPdfAdapter\Snappy\Pdf;
 use TYPO3\Flow\Annotations as Flow;
 use TYPO3\Flow\Mvc\View\AbstractView;
+use TYPO3\Flow\Utility\Files;
 use TYPO3\Fluid\View\TemplateView;
 
 /*                                                                              *
@@ -144,8 +145,12 @@ class PdfView extends AbstractView {
         $this->headView->assignMultiple($this->variables);
         $this->bodyView->assignMultiple($this->variables);
         $this->footView->assignMultiple($this->variables);
+	    $tmpPath = $this->environment->getPathToTemporaryDirectory() . '/wkhtmltopdf/';
+	    Files::createDirectoryRecursively($tmpPath);
+	    @symlink(FLOW_PATH_WEB . '/_Resources', $tmpPath . DIRECTORY_SEPARATOR . '_Resources');
 
         $pdf = new Pdf;
+	    $pdf->setTemporaryFolder($tmpPath);
 
         if ($this->headView->canRender($this->controllerContext)) {
             $pdf->setOption('header-html', $this->headView->render());
