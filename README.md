@@ -22,5 +22,4 @@ to configure your PDF View.
         marginTop: '0mm'
         marginBottom: '0mm'
 
-If you have to use wkhtmltopdf with unpatched Qt you could activate the Xvfb-Usage, but really: I would not recommend
-that. ;)
+If you have to use wkhtmltopdf with unpatched Qt you could activate the Xvfb-Usage, but really: I would not recommend that. ;)
