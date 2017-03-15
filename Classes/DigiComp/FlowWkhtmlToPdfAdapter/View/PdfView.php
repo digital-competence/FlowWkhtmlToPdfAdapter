@@ -5,7 +5,7 @@ use DigiComp\FlowWkhtmlToPdfAdapter\Snappy\Pdf;
 use Neos\Flow\Annotations as Flow;
 use Neos\Flow\Mvc\Controller\ControllerContext;
 use Neos\Flow\Mvc\View\AbstractView;
-use Neos\Flow\Utility\Files;
+use Neos\Utility\Files;
 use TYPO3\Fluid\View\TemplateView;
 
 /*                                                                              *
