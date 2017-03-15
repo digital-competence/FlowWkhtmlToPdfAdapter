@@ -6,7 +6,7 @@ use Neos\Flow\Annotations as Flow;
 use Neos\Flow\Mvc\Controller\ControllerContext;
 use Neos\Flow\Mvc\View\AbstractView;
 use Neos\Utility\Files;
-use TYPO3\Fluid\View\TemplateView;
+use Neos\FluidAdaptor\View\TemplateView;
 
 /*                                                                              *
  * This script belongs to the FLOW3 package "DigiComp.FlowWkhtmlToPdfAdapter".  *
@@ -123,17 +123,17 @@ class PdfView extends AbstractView
     );
 
     /**
-     * @var \TYPO3\Fluid\View\TemplateView
+     * @var \Neos\FluidAdaptor\View\TemplateView
      */
     protected $headView;
 
     /**
-     * @var \TYPO3\Fluid\View\TemplateView
+     * @var \Neos\FluidAdaptor\View\TemplateView
      */
     protected $bodyView;
 
     /**
-     * @var \TYPO3\Fluid\View\TemplateView
+     * @var \Neos\FluidAdaptor\View\TemplateView
      */
     protected $footView;
 
