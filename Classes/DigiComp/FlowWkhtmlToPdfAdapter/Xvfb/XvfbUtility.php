@@ -4,7 +4,7 @@ namespace DigiComp\FlowWkhtmlToPdfAdapter\Xvfb;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Process\Exception\RuntimeException;
 use Symfony\Component\Process\Process;
-use TYPO3\Flow\Annotations as Flow;
+use Neos\Flow\Annotations as Flow;
 
 /**
  * @Flow\Scope("singleton")

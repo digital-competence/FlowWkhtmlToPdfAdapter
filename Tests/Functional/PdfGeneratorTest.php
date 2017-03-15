@@ -2,12 +2,12 @@
 namespace DigiComp\FlowWkhtmlToPdfAdapter\Tests\Functional;
 use DigiComp\FlowWkhtmlToPdfAdapter\Snappy\Pdf;
 use Doctrine\ORM\Mapping as ORM;
-use TYPO3\Flow\Annotations as Flow;
+use Neos\Flow\Annotations as Flow;
 
 /**
  * Testcase for the correct CI-Container and the possibility to render pdfs
  */
-class PdfGeneratorTest extends \TYPO3\Flow\Tests\FunctionalTestCase {
+class PdfGeneratorTest extends \Neos\Flow\Tests\FunctionalTestCase {
 
 	/**
 	 * @test
