@@ -1,6 +1,6 @@
 {
     "name": "digicomp/flowwkhtmltopdfadapter",
-    "type": "typo3-flow-package",
+    "type": "neos-package",
     "authors": [
         {
             "name": "Ferdinand Kuhl",
