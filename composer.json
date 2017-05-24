@@ -17,7 +17,7 @@
         "pdf"
     ],
     "require": {
-        "neos/flow": "~4.0",
+        "neos/flow": "~4.1",
         "knplabs/knp-snappy": "~0.2",
         "symfony/process": "~2.4|~3.0"
     },
