@@ -1,6 +1,7 @@
 {
     "name": "digicomp/flowwkhtmltopdfadapter",
     "type": "neos-package",
+    "description": "Using pdf/snappy for a nice integration of wkhtmltopdf as ViewInterface",
     "authors": [
         {
             "name": "Ferdinand Kuhl",
@@ -25,8 +26,13 @@
         "phpunit/phpunit": "~3.7.0"
     },
     "autoload": {
-        "psr-0": {
-            "DigiComp\\FlowWkhtmlToPdfAdapter": "Classes"
+        "psr-4": {
+            "DigiComp\\FlowWkhtmlToPdfAdapter\\": "Classes"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Inwebs\\FlowWkhtmlToPdfAdapter\\Tests\\": "Tests"
         }
     },
     "extra": {
