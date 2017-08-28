@@ -2,11 +2,11 @@
 namespace DigiComp\FlowWkhtmlToPdfAdapter\View;
 
 use DigiComp\FlowWkhtmlToPdfAdapter\Snappy\Pdf;
-use TYPO3\Flow\Annotations as Flow;
-use TYPO3\Flow\Mvc\Controller\ControllerContext;
-use TYPO3\Flow\Mvc\View\AbstractView;
-use TYPO3\Flow\Utility\Files;
-use TYPO3\Fluid\View\TemplateView;
+use Neos\Flow\Annotations as Flow;
+use Neos\Flow\Mvc\Controller\ControllerContext;
+use Neos\Flow\Mvc\View\AbstractView;
+use Neos\Utility\Files;
+use Neos\FluidAdaptor\View\TemplateView;
 
 /*                                                                              *
  * This script belongs to the FLOW3 package "DigiComp.FlowWkhtmlToPdfAdapter".  *
@@ -123,22 +123,22 @@ class PdfView extends AbstractView
     );
 
     /**
-     * @var \TYPO3\Fluid\View\TemplateView
+     * @var \Neos\FluidAdaptor\View\TemplateView
      */
     protected $headView;
 
     /**
-     * @var \TYPO3\Fluid\View\TemplateView
+     * @var \Neos\FluidAdaptor\View\TemplateView
      */
     protected $bodyView;
 
     /**
-     * @var \TYPO3\Fluid\View\TemplateView
+     * @var \Neos\FluidAdaptor\View\TemplateView
      */
     protected $footView;
 
     /**
-     * @var \TYPO3\Flow\Utility\Environment
+     * @var \Neos\Flow\Utility\Environment
      * @Flow\Inject
      */
     protected $environment;
