@@ -1,11 +1,12 @@
+
 DigiComp:
   FlowWkhtmlToPdfAdapter:
     binary:
-      pdf: '/usr/bin/wkhtmltopdf'
-    useXvfb: FALSE
-
-TYPO3:
+      pdf: /usr/bin/wkhtmltopdf
+    useXvfb: false
+Neos:
   Flow:
     object:
       excludeClasses:
-        'knplabs.knpsnappy' : ['autoload']
+        knplabs.knpsnappy:
+          - autoload

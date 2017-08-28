@@ -3,7 +3,7 @@ namespace DigiComp\FlowWkhtmlToPdfAdapter\Snappy;
 
 use Doctrine\ORM\Mapping as ORM;
 use Knp\Snappy\AbstractGenerator;
-use TYPO3\Flow\Annotations as Flow;
+use Neos\Flow\Annotations as Flow;
 
 /**
  * @Flow\Scope("prototype")
