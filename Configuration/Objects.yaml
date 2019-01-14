@@ -7,3 +7,5 @@ DigiComp\FlowWkhtmlToPdfAdapter\Snappy\Pdf:
   properties:
     useXvfb:
       setting: DigiComp.FlowWkhtmlToPdfAdapter.useXvfb
+    timeout:
+      setting: DigiComp.FlowWkhtmlToPdfAdapter.timeout
