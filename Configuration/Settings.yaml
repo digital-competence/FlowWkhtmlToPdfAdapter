@@ -3,6 +3,7 @@ DigiComp:
     binary:
       pdf: '/usr/bin/wkhtmltopdf'
     useXvfb: FALSE
+    timeout: 60
 
 TYPO3:
   Flow:
