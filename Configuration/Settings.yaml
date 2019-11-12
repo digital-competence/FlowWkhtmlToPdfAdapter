@@ -1,9 +1,9 @@
-
 DigiComp:
   FlowWkhtmlToPdfAdapter:
     binary:
-      pdf: /usr/bin/wkhtmltopdf
+      pdf: '/usr/bin/wkhtmltopdf'
     useXvfb: false
+    timeout: 60
 Neos:
   Flow:
     object:
