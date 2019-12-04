@@ -1,7 +1,6 @@
 <?php
 namespace DigiComp\FlowWkhtmlToPdfAdapter\Xvfb;
 
-use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Process\Exception\RuntimeException;
 use Symfony\Component\Process\Process;
 use Neos\Flow\Annotations as Flow;
@@ -11,7 +10,6 @@ use Neos\Flow\Annotations as Flow;
  */
 class XvfbUtility
 {
-
     /**
      * Resoution of the virtual frame buffer
      * @var string
@@ -34,15 +32,20 @@ class XvfbUtility
      * Array of started processes
      * @var array
      */
-    protected $processes = array();
+    protected $processes = [];
 
+    /**
+     * @return int
+     */
     protected function getFreeXDisplay()
     {
         //TODO: Well this is really optimistic "free" We could check if it is really free with "xset q"
-        $xdisplay = rand($this->minXDisplay, $this->maxXDisplay);
-        return $xdisplay;
+        return rand($this->minXDisplay, $this->maxXDisplay);
     }
 
+    /**
+     * @return int
+     */
     public function startXvfb()
     {
         $xdisplay = $this->getFreeXDisplay();
@@ -73,6 +76,9 @@ class XvfbUtility
         return $xdisplay;
     }
 
+    /**
+     * @param int $display
+     */
     public function ensureClosed($display)
     {
         /** @var Process $process */
