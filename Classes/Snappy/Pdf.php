@@ -1,16 +1,12 @@
 <?php
 namespace DigiComp\FlowWkhtmlToPdfAdapter\Snappy;
 
-use Doctrine\ORM\Mapping as ORM;
+use DigiComp\FlowWkhtmlToPdfAdapter\Xvfb\XvfbUtility;
 use Knp\Snappy\AbstractGenerator;
 use Neos\Flow\Annotations as Flow;
 
-/**
- * @Flow\Scope("prototype")
- */
 class Pdf extends \Knp\Snappy\Pdf
 {
-
     /**
      * should Xvfb be used during executeCommand
      * @var bool
@@ -18,7 +14,7 @@ class Pdf extends \Knp\Snappy\Pdf
     protected $useXvfb = false;
 
     /**
-     * @var \DigiComp\FlowWkhtmlToPdfAdapter\Xvfb\XvfbUtility
+     * @var XvfbUtility
      * @Flow\Inject
      */
     protected $xvfbUtility;
@@ -28,15 +24,15 @@ class Pdf extends \Knp\Snappy\Pdf
      * @param array $options
      * @param array $env
      */
-    public function __construct($binary = null, $options = array(), $env = array())
+    public function __construct($binary = null, $options = [], $env = [])
     {
         $this->setDefaultExtension('pdf');
 
         if (is_null($options)) {
-            $options = array();
+            $options = [];
         }
         if (is_null($env)) {
-            $env = array();
+            $env = [];
         }
 
         AbstractGenerator::__construct($binary, $options, $env);
