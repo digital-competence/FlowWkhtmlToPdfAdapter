@@ -1,9 +1,9 @@
 <?php
 namespace DigiComp\FlowWkhtmlToPdfAdapter\Xvfb;
 
+use Neos\Flow\Annotations as Flow;
 use Symfony\Component\Process\Exception\RuntimeException;
 use Symfony\Component\Process\Process;
-use Neos\Flow\Annotations as Flow;
 
 /**
  * @Flow\Scope("singleton")

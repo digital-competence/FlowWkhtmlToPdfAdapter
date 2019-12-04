@@ -6,8 +6,8 @@ use Neos\Flow\Annotations as Flow;
 use Neos\Flow\Mvc\Controller\ControllerContext;
 use Neos\Flow\Mvc\View\AbstractView;
 use Neos\Flow\Utility\Environment;
-use Neos\Utility\Files;
 use Neos\FluidAdaptor\View\TemplateView;
+use Neos\Utility\Files;
 
 /*                                                                              *
  * This script belongs to the FLOW3 package "DigiComp.FlowWkhtmlToPdfAdapter".  *
