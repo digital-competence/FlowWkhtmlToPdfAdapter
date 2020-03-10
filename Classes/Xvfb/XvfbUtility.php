@@ -68,7 +68,7 @@ class XvfbUtility
                 $process->wait();
             }
         }
-        if (!$process->isRunning()) {
+        if (! $process->isRunning()) {
             throw new RuntimeException('X Server could not be started. Error output was: ' . $process->getErrorOutput());
         }
 
