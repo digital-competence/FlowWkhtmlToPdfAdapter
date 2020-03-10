@@ -1,4 +1,5 @@
 <?php
+
 namespace DigiComp\FlowWkhtmlToPdfAdapter\Xvfb;
 
 use Neos\Flow\Annotations as Flow;
@@ -50,7 +51,7 @@ class XvfbUtility
     {
         $xdisplay = $this->getFreeXDisplay();
         $xvfbProcess = sprintf(
-            'exec /usr/bin/Xvfb -screen 0 %s ' .//-dpi ' . $this->dpi .
+            'exec /usr/bin/Xvfb -screen 0 %s ' . //-dpi ' . $this->dpi .
             ' -terminate -nolisten tcp :%s' . //could configure font-path for X here with -fp
             ' -tst ',
             $this->resolution,
@@ -67,7 +68,7 @@ class XvfbUtility
                 $process->wait();
             }
         }
-        if (!$process->isRunning()) {
+        if (! $process->isRunning()) {
             throw new RuntimeException('X Server could not be started. Error output was: ' . $process->getErrorOutput());
         }
 

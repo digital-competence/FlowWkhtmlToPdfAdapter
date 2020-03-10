@@ -1,4 +1,5 @@
 <?php
+
 namespace DigiComp\FlowWkhtmlToPdfAdapter\Tests\Functional;
 
 use DigiComp\FlowWkhtmlToPdfAdapter\Snappy\Pdf;
@@ -12,8 +13,9 @@ class PdfGeneratorTest extends FunctionalTestCase
     /**
      * @test
      */
-    public function testPdfCreation() {
-        $name = session_save_path() .'/'. uniqid() . '.pdf';
+    public function testPdfCreation()
+    {
+        $name = session_save_path() . '/' . uniqid() . '.pdf';
         $pdf = new Pdf();
         file_put_contents($name, $pdf->getOutputFromHtml('<h1>Hello World</h1>'));
         $this->assertFileExists($name);
