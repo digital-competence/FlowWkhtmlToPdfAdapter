@@ -51,7 +51,7 @@ class XvfbUtility
     {
         $xdisplay = $this->getFreeXDisplay();
         $xvfbProcess = sprintf(
-            'exec /usr/bin/Xvfb -screen 0 %s ' .//-dpi ' . $this->dpi .
+            'exec /usr/bin/Xvfb -screen 0 %s ' . //-dpi ' . $this->dpi .
             ' -terminate -nolisten tcp :%s' . //could configure font-path for X here with -fp
             ' -tst ',
             $this->resolution,
