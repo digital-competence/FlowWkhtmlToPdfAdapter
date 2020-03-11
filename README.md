@@ -13,7 +13,7 @@ Header-html and footer-html will be used, if found.
 Additionally you may set ALL options KNP\Snappy (a wkthmltopdf-Abstraction) understands in your Views.yaml 
 to configure your PDF View.
 
-	-
+    -
       requestFilter: 'isFormat("pdf") && isController("Invoice")'
       viewObjectName: 'DigiComp\FlowWkhtmlToPdfAdapter\View\PdfView'
       options:
