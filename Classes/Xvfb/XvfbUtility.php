@@ -82,7 +82,7 @@ class XvfbUtility
      */
     public function ensureClosed($display)
     {
-        /** @var Process $process */
+        /* @var Process $process */
         $process = $this->processes[$display];
         if ($process->isRunning()) {
             $process->stop();
