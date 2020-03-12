@@ -21,7 +21,7 @@ class Pdf extends \Knp\Snappy\Pdf
     protected $xvfbUtility;
 
     /**
-     * @param null  $binary
+     * @param string $binary
      * @param array $options
      * @param array $env
      */
