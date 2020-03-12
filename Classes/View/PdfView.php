@@ -175,7 +175,6 @@ class PdfView extends AbstractView
 
     /**
      * @param ControllerContext $controllerContext
-     *
      * @return bool
      */
     public function canRender(ControllerContext $controllerContext)
