@@ -16,8 +16,6 @@ use Neos\Utility\Files;
 
 /**
  * PdfView connects up to three templates to generate a PDF using wkhtmltopdf
- *
- * @package DigiComp\FlowWkhtmlToPdfAdapter\View
  */
 class PdfView extends AbstractView
 {
