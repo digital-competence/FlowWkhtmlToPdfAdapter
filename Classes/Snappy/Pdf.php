@@ -40,7 +40,7 @@ class Pdf extends \Knp\Snappy\Pdf
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     protected function executeCommand($command)
     {
