@@ -10,6 +10,7 @@ class Pdf extends \Knp\Snappy\Pdf
 {
     /**
      * should Xvfb be used during executeCommand
+     *
      * @var bool
      */
     protected $useXvfb = false;

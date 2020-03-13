@@ -13,24 +13,28 @@ class XvfbUtility
 {
     /**
      * Resoution of the virtual frame buffer
+     *
      * @var string
      */
     protected $resolution = '1024x768x24';
 
     /**
      * Minimal X Display number
+     *
      * @var int
      */
     protected $minXDisplay = 20;
 
     /**
      * Maximum X Display number
+     *
      * @var int
      */
     protected $maxXDisplay = 500;
 
     /**
      * Array of started processes
+     *
      * @var array
      */
     protected $processes = [];
