@@ -37,6 +37,7 @@ class Pdf extends \Knp\Snappy\Pdf
             $env = [];
         }
 
+        // @deprecated: should call parent constructor
         AbstractGenerator::__construct($binary, $options, $env);
     }
 
