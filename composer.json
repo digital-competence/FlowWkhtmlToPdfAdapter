@@ -19,7 +19,7 @@
     ],
     "require": {
         "neos/flow": "~4.1|~5.3",
-        "knplabs/knp-snappy": "~0.2",
+        "knplabs/knp-snappy": "~0.2|~1.0",
         "symfony/process": "~2.4|~3.0|~4.0"
     },
     "autoload": {
