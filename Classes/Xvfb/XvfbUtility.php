@@ -13,24 +13,28 @@ class XvfbUtility
 {
     /**
      * Resoution of the virtual frame buffer
+     *
      * @var string
      */
     protected $resolution = '1024x768x24';
 
     /**
      * Minimal X Display number
+     *
      * @var int
      */
     protected $minXDisplay = 20;
 
     /**
      * Maximum X Display number
+     *
      * @var int
      */
     protected $maxXDisplay = 500;
 
     /**
      * Array of started processes
+     *
      * @var array
      */
     protected $processes = [];
@@ -40,7 +44,7 @@ class XvfbUtility
      */
     protected function getFreeXDisplay()
     {
-        //TODO: Well this is really optimistic "free" We could check if it is really free with "xset q"
+        // TODO: Well this is really optimistic "free" We could check if it is really free with "xset q"
         return rand($this->minXDisplay, $this->maxXDisplay);
     }
 
@@ -51,19 +55,19 @@ class XvfbUtility
     {
         $xdisplay = $this->getFreeXDisplay();
         $xvfbProcess = sprintf(
-            'exec /usr/bin/Xvfb -screen 0 %s ' . //-dpi ' . $this->dpi .
-            ' -terminate -nolisten tcp :%s' . //could configure font-path for X here with -fp
+            'exec /usr/bin/Xvfb -screen 0 %s ' . // -dpi ' . $this->dpi .
+            ' -terminate -nolisten tcp :%s' . // could configure font-path for X here with -fp
             ' -tst ',
             $this->resolution,
             $xdisplay
         );
 
-        $process = new Process($xvfbProcess);
+        $process = $this->createProcess($xvfbProcess);
         $process->start();
-        //Wait for first output
+        // Wait for first output
         while (strlen($process->getErrorOutput()) < 5) {
             usleep(500);
-            //IF an error encountered wait until process dies
+            // IF an error encountered wait until process dies
             if (strpos($process->getErrorOutput(), '(EE)') !== false) {
                 $process->wait();
             }
@@ -82,10 +86,26 @@ class XvfbUtility
      */
     public function ensureClosed($display)
     {
-        /** @var Process $process */
+        /* @var Process $process */
         $process = $this->processes[$display];
         if ($process->isRunning()) {
             $process->stop();
         }
+    }
+
+    /**
+     * @param string $command
+     *
+     * @return Process
+     */
+    protected function createProcess(string $command): Process
+    {
+        // Since symfony/process 4.0 there is a new method for CLI commands with arguments
+        if (method_exists(Process::class, 'fromShellCommandline')) {
+            $process = Process::fromShellCommandline($command);
+        } else {
+            $process = new Process($command);
+        }
+        return $process;
     }
 }

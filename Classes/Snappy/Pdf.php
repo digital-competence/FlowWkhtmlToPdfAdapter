@@ -10,6 +10,7 @@ class Pdf extends \Knp\Snappy\Pdf
 {
     /**
      * should Xvfb be used during executeCommand
+     *
      * @var bool
      */
     protected $useXvfb = false;
@@ -21,7 +22,7 @@ class Pdf extends \Knp\Snappy\Pdf
     protected $xvfbUtility;
 
     /**
-     * @param null  $binary
+     * @param string $binary
      * @param array $options
      * @param array $env
      */
@@ -36,11 +37,12 @@ class Pdf extends \Knp\Snappy\Pdf
             $env = [];
         }
 
+        // @deprecated: should call parent constructor
         AbstractGenerator::__construct($binary, $options, $env);
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     protected function executeCommand($command)
     {

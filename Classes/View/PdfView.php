@@ -16,8 +16,6 @@ use Neos\Utility\Files;
 
 /**
  * PdfView connects up to three templates to generate a PDF using wkhtmltopdf
- *
- * @package DigiComp\FlowWkhtmlToPdfAdapter\View
  */
 class PdfView extends AbstractView
 {
@@ -57,32 +55,32 @@ class PdfView extends AbstractView
         ],
         'bodyTemplatePathAndFilenamePattern' => [
             '@templateRoot/@subpackage/@controller/@action.PDFBody.html',
-            'File pattern for resolving the template file. Following placeholders are supported: "@templateRoot",  "@partialRoot", "@layoutRoot", "@subpackage", "@action", "@format"',
+            'File pattern for resolving the template file. Following placeholders are supported: "@templateRoot", "@partialRoot", "@layoutRoot", "@subpackage", "@action", "@format"',
             'string'
         ],
         'footTemplatePathAndFilenamePattern' => [
             '@templateRoot/@subpackage/@controller/@action.PDFFoot.html',
-            'File pattern for resolving the template file. Following placeholders are supported: "@templateRoot",  "@partialRoot", "@layoutRoot", "@subpackage", "@action", "@format"',
+            'File pattern for resolving the template file. Following placeholders are supported: "@templateRoot", "@partialRoot", "@layoutRoot", "@subpackage", "@action", "@format"',
             'string'
         ],
         'headTemplatePathAndFilenamePattern' => [
             '@templateRoot/@subpackage/@controller/@action.PDFHead.html',
-            'File pattern for resolving the template file. Following placeholders are supported: "@templateRoot",  "@partialRoot", "@layoutRoot", "@subpackage", "@action", "@format"',
+            'File pattern for resolving the template file. Following placeholders are supported: "@templateRoot", "@partialRoot", "@layoutRoot", "@subpackage", "@action", "@format"',
             'string'
         ],
         'partialPathAndFilenamePattern' => [
             '@partialRoot/@subpackage/@partial.@format',
-            'Directory pattern for global partials. Following placeholders are supported: "@templateRoot",  "@partialRoot", "@layoutRoot", "@subpackage", "@partial", "@format"',
+            'Directory pattern for global partials. Following placeholders are supported: "@templateRoot", "@partialRoot", "@layoutRoot", "@subpackage", "@partial", "@format"',
             'string'
         ],
         'layoutPathAndFilenamePattern' => [
             '@layoutRoot/@layout.@format',
-            'File pattern for resolving the layout. Following placeholders are supported: "@templateRoot",  "@partialRoot", "@layoutRoot", "@subpackage", "@layout", "@format"',
+            'File pattern for resolving the layout. Following placeholders are supported: "@templateRoot", "@partialRoot", "@layoutRoot", "@subpackage", "@layout", "@format"',
             'string'
         ],
         'templatePathAndFilename' => [
             null,
-            'Path and filename of the template file. If set,  overrides the templatePathAndFilenamePattern',
+            'Path and filename of the template file. If set, overrides the templatePathAndFilenamePattern',
             'string'
         ],
         'layoutPathAndFilename' => [
@@ -175,7 +173,6 @@ class PdfView extends AbstractView
 
     /**
      * @param ControllerContext $controllerContext
-     *
      * @return bool
      */
     public function canRender(ControllerContext $controllerContext)
