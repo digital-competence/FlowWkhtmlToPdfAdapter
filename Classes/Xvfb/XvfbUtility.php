@@ -62,7 +62,7 @@ class XvfbUtility
             $xdisplay
         );
 
-        $process = new Process($xvfbProcess);
+        $process = $this->createProcess($xvfbProcess);
         $process->start();
         // Wait for first output
         while (strlen($process->getErrorOutput()) < 5) {
@@ -91,5 +91,21 @@ class XvfbUtility
         if ($process->isRunning()) {
             $process->stop();
         }
+    }
+
+    /**
+     * @param string $command
+     *
+     * @return Process
+     */
+    protected function createProcess(string $command): Process
+    {
+        // Since symfony/process 4.0 there is a new method for CLI commands with arguments
+        if (method_exists(Process::class, 'fromShellCommandline')) {
+            $process = Process::fromShellCommandline($command);
+        } else {
+            $process = new Process($command);
+        }
+        return $process;
     }
 }
