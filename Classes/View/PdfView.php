@@ -7,6 +7,7 @@ use Neos\Flow\Annotations as Flow;
 use Neos\Flow\Mvc\Controller\ControllerContext;
 use Neos\Flow\Mvc\View\AbstractView;
 use Neos\Flow\Utility\Environment;
+use Neos\FluidAdaptor\View\Exception\InvalidTemplateResourceException;
 use Neos\FluidAdaptor\View\TemplateView;
 use Neos\Utility\Files;
 
@@ -229,11 +230,16 @@ class PdfView extends AbstractView
         $pdf = new Pdf();
         $pdf->setTemporaryFolder($tmpPath);
 
-        if ($this->headView->canRender($this->controllerContext)) {
+        try {
             $pdf->setOption('header-html', $this->headView->render());
+        } catch(InvalidTemplateResourceException $e) {
+            $pdf->setOption('header-html', null);
         }
-        if ($this->footView->canRender($this->controllerContext)) {
+
+        try {
             $pdf->setOption('footer-html', $this->footView->render());
+        } catch(InvalidTemplateResourceException $e) {
+            $pdf->setOption('footer-html', null);
         }
 
         foreach (static::$optionsToPdfTranslation as $source => $target) {
