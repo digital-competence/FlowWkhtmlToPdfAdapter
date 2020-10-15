@@ -4,6 +4,7 @@ namespace DigiComp\FlowWkhtmlToPdfAdapter\View;
 
 use DigiComp\FlowWkhtmlToPdfAdapter\Snappy\Pdf;
 use Neos\Flow\Annotations as Flow;
+use Neos\Flow\Http\Component\SetHeaderComponent;
 use Neos\Flow\Mvc\Controller\ControllerContext;
 use Neos\Flow\Mvc\View\AbstractView;
 use Neos\Flow\Utility\Environment;
@@ -40,17 +41,17 @@ class PdfView extends AbstractView
             'string'
         ],
         'templateRootPaths' => [
-            null,
+            [],
             'Path(s) to the template root. If NULL, then $this->options["templateRootPathPattern"] will be used to determine the path',
             'array'
         ],
         'partialRootPaths' => [
-            null,
+            [],
             'Path(s) to the partial root. If NULL, then $this->options["partialRootPathPattern"] will be used to determine the path',
             'array'
         ],
         'layoutRootPaths' => [
-            null,
+            [],
             'Path(s) to the layout root. If NULL, then $this->options["layoutRootPathPattern"] will be used to determine the path',
             'array'
         ],
@@ -94,6 +95,7 @@ class PdfView extends AbstractView
         'marginTop' => ['10mm', 'Left margin of the PDF', 'string'],
         'marginRight' => ['10mm', 'Left margin of the PDF', 'string'],
         'marginBottom' => ['10mm', 'Left margin of the PDF', 'string'],
+        'enableLocalFileAccess' => [false, 'Allow local file access', 'bool'],
         'dpi' => [96, 'Resolution of the PDF', 'int'],
     ];
 
@@ -109,6 +111,7 @@ class PdfView extends AbstractView
         'bodyTemplatePathAndFilenamePattern',
         'headTemplatePathAndFilenamePattern',
         'footTemplatePathAndFilenamePattern',
+        'enableLocalFileAccess',
         'dpi'
     ];
 
@@ -121,6 +124,7 @@ class PdfView extends AbstractView
         'marginRight' => 'margin-right',
         'marginTop' => 'margin-top',
         'marginBottom' => 'margin-bottom',
+        'enableLocalFileAccess' => 'enable-local-file-access',
         'dpi' => 'dpi',
     ];
 
@@ -193,12 +197,17 @@ class PdfView extends AbstractView
         $this->generateFile($fileName);
 
         $sendFileName = isset($this->variables['pdfFileName']) ? $this->variables['pdfFileName'] : basename($fileName);
-        $this->controllerContext->getResponse()->setHeader('Content-Type', 'application/pdf', true);
-        $this->controllerContext->getResponse()->setHeader(
+        $this->controllerContext->getResponse()->setComponentParameter(
+            SetHeaderComponent::class,
+            'Content-Type',
+            'application/pdf'
+        );
+        $this->controllerContext->getResponse()->setComponentParameter(
+            SetHeaderComponent::class,
             'Content-Disposition',
             sprintf('attachment; filename="%s"', $sendFileName)
         );
-        $this->controllerContext->getResponse()->send();
+
         $content = file_get_contents($fileName);
         unlink($fileName);
         return $content;
