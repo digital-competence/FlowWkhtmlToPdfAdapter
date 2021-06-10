@@ -40,17 +40,17 @@ class PdfView extends AbstractView
             'string'
         ],
         'templateRootPaths' => [
-            null,
+            [],
             'Path(s) to the template root. If NULL, then $this->options["templateRootPathPattern"] will be used to determine the path',
             'array'
         ],
         'partialRootPaths' => [
-            null,
+            [],
             'Path(s) to the partial root. If NULL, then $this->options["partialRootPathPattern"] will be used to determine the path',
             'array'
         ],
         'layoutRootPaths' => [
-            null,
+            [],
             'Path(s) to the layout root. If NULL, then $this->options["layoutRootPathPattern"] will be used to determine the path',
             'array'
         ],
@@ -94,6 +94,8 @@ class PdfView extends AbstractView
         'marginTop' => ['10mm', 'Left margin of the PDF', 'string'],
         'marginRight' => ['10mm', 'Left margin of the PDF', 'string'],
         'marginBottom' => ['10mm', 'Left margin of the PDF', 'string'],
+        // @deprecated, will change to false in next major
+        'enableLocalFileAccess' => [true, 'Allow local file access', 'bool'],
         'dpi' => [96, 'Resolution of the PDF', 'int'],
     ];
 
@@ -109,6 +111,7 @@ class PdfView extends AbstractView
         'bodyTemplatePathAndFilenamePattern',
         'headTemplatePathAndFilenamePattern',
         'footTemplatePathAndFilenamePattern',
+        'enableLocalFileAccess',
         'dpi'
     ];
 
@@ -121,6 +124,7 @@ class PdfView extends AbstractView
         'marginRight' => 'margin-right',
         'marginTop' => 'margin-top',
         'marginBottom' => 'margin-bottom',
+        'enableLocalFileAccess' => 'enable-local-file-access',
         'dpi' => 'dpi',
     ];
 
