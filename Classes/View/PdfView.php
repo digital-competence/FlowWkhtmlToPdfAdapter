@@ -196,7 +196,7 @@ class PdfView extends AbstractView
 
         $this->generateFile($fileName);
 
-        $sendFileName = isset($this->variables['pdfFileName']) ? $this->variables['pdfFileName'] : basename($fileName);
+        $sendFileName = $this->variables['pdfFileName'] ?? basename($fileName);
         $this->controllerContext->getResponse()->setComponentParameter(
             SetHeaderComponent::class,
             'Content-Type',
@@ -227,7 +227,7 @@ class PdfView extends AbstractView
     /**
      * @param string $fileName
      */
-    protected function generateFile($fileName)
+    protected function generateFile(string $fileName)
     {
         $this->headView->assignMultiple($this->variables);
         $this->bodyView->assignMultiple($this->variables);
@@ -241,13 +241,13 @@ class PdfView extends AbstractView
 
         try {
             $pdf->setOption('header-html', $this->headView->render());
-        } catch(InvalidTemplateResourceException $e) {
+        } catch (InvalidTemplateResourceException $e) {
             $pdf->setOption('header-html', null);
         }
 
         try {
             $pdf->setOption('footer-html', $this->footView->render());
-        } catch(InvalidTemplateResourceException $e) {
+        } catch (InvalidTemplateResourceException $e) {
             $pdf->setOption('footer-html', null);
         }
 

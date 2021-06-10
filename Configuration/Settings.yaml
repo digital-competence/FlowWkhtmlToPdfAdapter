@@ -4,10 +4,3 @@ DigiComp:
       pdf: '/usr/bin/wkhtmltopdf'
     useXvfb: false
     timeout: 60
-
-Neos:
-  Flow:
-    object:
-      excludeClasses:
-        knplabs.knpsnappy:
-          - 'autoload'

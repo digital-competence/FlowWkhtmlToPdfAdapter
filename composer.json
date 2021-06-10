@@ -18,9 +18,10 @@
         "pdf"
     ],
     "require": {
-        "neos/flow": "~4.1|~5.3|~6.3",
-        "knplabs/knp-snappy": "~0.2|~1.0",
-        "symfony/process": "~2.4|~3.0|~4.0|~5.0"
+        "neos/flow": "~6.3",
+        "knplabs/knp-snappy": "~1.0",
+        "symfony/process": "~4.0|~5.0",
+        "php": ">=7.4"
     },
     "autoload": {
         "psr-4": {
@@ -34,7 +35,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-develop": "2.0.x-dev",
+            "dev-develop": "3.0.x-dev",
             "dev-version/1.x-dev": "1.1.x-dev"
         },
         "applied-flow-migrations": [

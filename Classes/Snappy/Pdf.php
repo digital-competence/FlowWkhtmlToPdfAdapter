@@ -13,11 +13,11 @@ class Pdf extends \Knp\Snappy\Pdf
      *
      * @var bool
      */
-    protected $useXvfb = false;
+    protected bool $useXvfb = false;
 
     /**
-     * @var XvfbUtility
      * @Flow\Inject
+     * @var XvfbUtility
      */
     protected $xvfbUtility;
 
@@ -37,8 +37,7 @@ class Pdf extends \Knp\Snappy\Pdf
             $env = [];
         }
 
-        // @deprecated: should call parent constructor
-        AbstractGenerator::__construct($binary, $options, $env);
+        parent::__construct($binary, $options, $env);
     }
 
     /**
