@@ -9,6 +9,7 @@ use Neos\Flow\Mvc\Controller\ControllerContext;
 use Neos\Flow\Mvc\View\AbstractView;
 use Neos\Flow\Utility\Environment;
 use Neos\FluidAdaptor\View\Exception\InvalidTemplateResourceException;
+use Neos\FluidAdaptor\View\StandaloneView;
 use Neos\FluidAdaptor\View\TemplateView;
 use Neos\Utility\Files;
 
@@ -90,12 +91,16 @@ class PdfView extends AbstractView
             'Path and filename of the layout file. If set, overrides the layoutPathAndFilenamePattern',
             'string'
         ],
+        'pdfFilename' => ['{controller}-{action}.pdf', 'Name of the PDF File to download', 'string'],
         'orientation' => ['portrait', 'Orientation of the page', 'string'],
         'marginLeft' => ['10mm', 'Left margin of the PDF', 'string'],
         'marginTop' => ['10mm', 'Left margin of the PDF', 'string'],
         'marginRight' => ['10mm', 'Left margin of the PDF', 'string'],
         'marginBottom' => ['10mm', 'Left margin of the PDF', 'string'],
         'enableLocalFileAccess' => [false, 'Allow local file access', 'bool'],
+        'disableSmartShrinking' => [false, 'Disable smart-shrinking', 'bool'],
+        'pageSize' => ['A4', 'Page size', 'string'],
+        'download' => [true, 'force browser to download', 'bool'],
         'dpi' => [96, 'Resolution of the PDF', 'int'],
     ];
 
@@ -108,6 +113,10 @@ class PdfView extends AbstractView
         'marginTop',
         'marginRight',
         'marginBottom',
+        'download',
+        'disableSmartShrinking',
+        'pageSize',
+        'pdfFilename',
         'bodyTemplatePathAndFilenamePattern',
         'headTemplatePathAndFilenamePattern',
         'footTemplatePathAndFilenamePattern',
@@ -125,6 +134,8 @@ class PdfView extends AbstractView
         'marginTop' => 'margin-top',
         'marginBottom' => 'margin-bottom',
         'enableLocalFileAccess' => 'enable-local-file-access',
+        'pageSize' => 'page-size',
+        'disableSmartShrinking' => 'disable-smart-shrinking',
         'dpi' => 'dpi',
     ];
 
@@ -196,17 +207,26 @@ class PdfView extends AbstractView
 
         $this->generateFile($fileName);
 
-        $sendFileName = $this->variables['pdfFileName'] ?? basename($fileName);
+        $filenameTemplate = new StandaloneView();
+        $filenameTemplate->setTemplateSource($this->options['pdfFilename']);
+        $filenameTemplate->assignMultiple($this->variables);
+        $filenameTemplate->assignMultiple([
+            'controller' => $this->controllerContext->getRequest()->getControllerName(),
+            'action' => $this->controllerContext->getRequest()->getControllerActionName(),
+        ]);
+        $sendFileName = $filenameTemplate->render();
         $this->controllerContext->getResponse()->setComponentParameter(
             SetHeaderComponent::class,
             'Content-Type',
             'application/pdf'
         );
-        $this->controllerContext->getResponse()->setComponentParameter(
-            SetHeaderComponent::class,
-            'Content-Disposition',
-            sprintf('attachment; filename="%s"', $sendFileName)
-        );
+        if ($this->options['download']) {
+            $this->controllerContext->getResponse()->setComponentParameter(
+                SetHeaderComponent::class,
+                'Content-Disposition',
+                sprintf('attachment; filename="%s"', $sendFileName)
+            );
+        }
 
         $content = file_get_contents($fileName);
         unlink($fileName);
