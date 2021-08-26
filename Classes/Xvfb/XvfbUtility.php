@@ -3,7 +3,6 @@
 namespace DigiComp\FlowWkhtmlToPdfAdapter\Xvfb;
 
 use Neos\Flow\Annotations as Flow;
-use Symfony\Component\Process\Exception\RuntimeException;
 use Symfony\Component\Process\Process;
 
 /**
@@ -16,33 +15,33 @@ class XvfbUtility
      *
      * @var string
      */
-    protected $resolution = '1024x768x24';
+    protected string $resolution = '1024x768x24';
 
     /**
      * Minimal X Display number
      *
      * @var int
      */
-    protected $minXDisplay = 20;
+    protected int $minXDisplay = 20;
 
     /**
      * Maximum X Display number
      *
      * @var int
      */
-    protected $maxXDisplay = 500;
+    protected int $maxXDisplay = 500;
 
     /**
      * Array of started processes
      *
      * @var array
      */
-    protected $processes = [];
+    protected array $processes = [];
 
     /**
      * @return int
      */
-    protected function getFreeXDisplay()
+    protected function getFreeXDisplay(): int
     {
         // TODO: Well this is really optimistic "free" We could check if it is really free with "xset q"
         return rand($this->minXDisplay, $this->maxXDisplay);
@@ -51,7 +50,7 @@ class XvfbUtility
     /**
      * @return int
      */
-    public function startXvfb()
+    public function startXvfb(): int
     {
         $xdisplay = $this->getFreeXDisplay();
         $xvfbProcess = sprintf(
@@ -62,7 +61,7 @@ class XvfbUtility
             $xdisplay
         );
 
-        $process = $this->createProcess($xvfbProcess);
+        $process = Process::fromShellCommandline($xvfbProcess);
         $process->start();
         // Wait for first output
         while (strlen($process->getErrorOutput()) < 5) {
@@ -73,7 +72,9 @@ class XvfbUtility
             }
         }
         if (! $process->isRunning()) {
-            throw new RuntimeException('X Server could not be started. Error output was: ' . $process->getErrorOutput());
+            throw new \RuntimeException(
+                'X Server could not be started. Error output was: ' . $process->getErrorOutput()
+            );
         }
 
         $this->processes[$xdisplay] = $process;
@@ -84,28 +85,12 @@ class XvfbUtility
     /**
      * @param int $display
      */
-    public function ensureClosed($display)
+    public function ensureClosed(int $display): void
     {
         /* @var Process $process */
         $process = $this->processes[$display];
         if ($process->isRunning()) {
             $process->stop();
         }
-    }
-
-    /**
-     * @param string $command
-     *
-     * @return Process
-     */
-    protected function createProcess(string $command): Process
-    {
-        // Since symfony/process 4.0 there is a new method for CLI commands with arguments
-        if (method_exists(Process::class, 'fromShellCommandline')) {
-            $process = Process::fromShellCommandline($command);
-        } else {
-            $process = new Process($command);
-        }
-        return $process;
     }
 }
