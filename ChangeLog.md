@@ -12,7 +12,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
   - `pdfFilename` (a fluid template, to set the filename of your sent pdf file)
   - `pageSize` (passed through to wkhtmltopdf)
   - `disableSmartShrinking` (passed through to wkhtmltopdf)
-    
+
 ### Removed
 - The PdfView now ignores the special meaning of `filename` variable. If you used it to change the sent filename, use the provided option now (see `pdfFilename` from above)
 
