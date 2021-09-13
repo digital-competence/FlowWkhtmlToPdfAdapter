@@ -6,19 +6,20 @@ use DigiComp\FlowWkhtmlToPdfAdapter\Snappy\Pdf;
 use Neos\Flow\Annotations as Flow;
 use Neos\Flow\Http\Component\SetHeaderComponent;
 use Neos\Flow\Mvc\Controller\ControllerContext;
+use Neos\Flow\Mvc\Exception as NeosFlowMvcException;
 use Neos\Flow\Mvc\View\AbstractView;
 use Neos\Flow\Utility\Environment;
+use Neos\Flow\Utility\Exception as NeosFlowUtilityException;
+use Neos\FluidAdaptor\Exception as NeosFluidAdaptorException;
+use Neos\FluidAdaptor\View\AbstractTemplateView;
 use Neos\FluidAdaptor\View\Exception\InvalidTemplateResourceException;
 use Neos\FluidAdaptor\View\StandaloneView;
 use Neos\FluidAdaptor\View\TemplateView;
+use Neos\Utility\Exception\FilesException;
 use Neos\Utility\Files;
 
-/*                                                                              *
- * This script belongs to the FLOW3 package "DigiComp.FlowWkhtmlToPdfAdapter".  *
- *                                                                              */
-
 /**
- * PdfView connects up to three templates to generate a PDF using wkhtmltopdf
+ * PdfView connects up to three templates to generate a PDF using wkhtmltopdf.
  */
 class PdfView extends AbstractView
 {
@@ -56,6 +57,11 @@ class PdfView extends AbstractView
             'Path(s) to the layout root. If NULL, then $this->options["layoutRootPathPattern"] will be used to determine the path',
             'array'
         ],
+        'headTemplatePathAndFilenamePattern' => [
+            '@templateRoot/@subpackage/@controller/@action.PDFHead.html',
+            'File pattern for resolving the template file. Following placeholders are supported: "@templateRoot", "@partialRoot", "@layoutRoot", "@subpackage", "@action", "@format"',
+            'string'
+        ],
         'bodyTemplatePathAndFilenamePattern' => [
             '@templateRoot/@subpackage/@controller/@action.PDFBody.html',
             'File pattern for resolving the template file. Following placeholders are supported: "@templateRoot", "@partialRoot", "@layoutRoot", "@subpackage", "@action", "@format"',
@@ -63,11 +69,6 @@ class PdfView extends AbstractView
         ],
         'footTemplatePathAndFilenamePattern' => [
             '@templateRoot/@subpackage/@controller/@action.PDFFoot.html',
-            'File pattern for resolving the template file. Following placeholders are supported: "@templateRoot", "@partialRoot", "@layoutRoot", "@subpackage", "@action", "@format"',
-            'string'
-        ],
-        'headTemplatePathAndFilenamePattern' => [
-            '@templateRoot/@subpackage/@controller/@action.PDFHead.html',
             'File pattern for resolving the template file. Following placeholders are supported: "@templateRoot", "@partialRoot", "@layoutRoot", "@subpackage", "@action", "@format"',
             'string'
         ],
@@ -81,9 +82,19 @@ class PdfView extends AbstractView
             'File pattern for resolving the layout. Following placeholders are supported: "@templateRoot", "@partialRoot", "@layoutRoot", "@subpackage", "@layout", "@format"',
             'string'
         ],
-        'templatePathAndFilename' => [
+        'headTemplatePathAndFilename' => [
             null,
-            'Path and filename of the template file. If set, overrides the templatePathAndFilenamePattern',
+            'Path and filename of the template file. If set, overrides the headTemplatePathAndFilenamePattern',
+            'string'
+        ],
+        'bodyTemplatePathAndFilename' => [
+            null,
+            'Path and filename of the template file. If set, overrides the bodyTemplatePathAndFilenamePattern',
+            'string'
+        ],
+        'footTemplatePathAndFilename' => [
+            null,
+            'Path and filename of the template file. If set, overrides the footTemplatePathAndFilenamePattern',
             'string'
         ],
         'layoutPathAndFilename' => [
@@ -91,190 +102,198 @@ class PdfView extends AbstractView
             'Path and filename of the layout file. If set, overrides the layoutPathAndFilenamePattern',
             'string'
         ],
-        'pdfFilename' => ['{controller}-{action}.pdf', 'Name of the PDF File to download', 'string'],
-        'orientation' => ['portrait', 'Orientation of the page', 'string'],
-        'marginLeft' => ['10mm', 'Left margin of the PDF', 'string'],
-        'marginTop' => ['10mm', 'Left margin of the PDF', 'string'],
-        'marginRight' => ['10mm', 'Left margin of the PDF', 'string'],
-        'marginBottom' => ['10mm', 'Left margin of the PDF', 'string'],
-        'enableLocalFileAccess' => [false, 'Allow local file access', 'bool'],
-        'disableSmartShrinking' => [false, 'Disable smart-shrinking', 'bool'],
-        'pageSize' => ['A4', 'Page size', 'string'],
-        'download' => [true, 'force browser to download', 'bool'],
-        'dpi' => [96, 'Resolution of the PDF', 'int'],
+        'orientation' => ['portrait', 'Orientation of the page.', 'string'],
+        'marginLeft' => ['10mm', 'Left margin of the PDF.', 'string'],
+        'marginTop' => ['10mm', 'Top margin of the PDF.', 'string'],
+        'marginRight' => ['10mm', 'Right margin of the PDF.', 'string'],
+        'marginBottom' => ['10mm', 'Bottom margin of the PDF.', 'string'],
+        'enableLocalFileAccess' => [false, 'Allow local file access.', 'bool'],
+        'disableSmartShrinking' => [false, 'Disable smart-shrinking.', 'bool'],
+        'pageSize' => ['A4', 'Page size.', 'string'],
+        'dpi' => [96, 'Resolution of the PDF.', 'int'],
+        'download' => [true, 'Force browser to download.', 'bool'],
+        'pdfFilename' => ['{controller}-{action}.pdf', 'Name of the PDF file to download.', 'string'],
     ];
 
     /**
      * @var array
      */
-    protected $blacklistTemplateOptions = [
+    protected array $blacklistTemplateOptions = [
+        'headTemplatePathAndFilenamePattern',
+        'bodyTemplatePathAndFilenamePattern',
+        'footTemplatePathAndFilenamePattern',
+        'headTemplatePathAndFilename',
+        'bodyTemplatePathAndFilename',
+        'footTemplatePathAndFilename',
         'orientation',
         'marginLeft',
         'marginTop',
         'marginRight',
         'marginBottom',
-        'download',
+        'enableLocalFileAccess',
         'disableSmartShrinking',
         'pageSize',
+        'dpi',
+        'download',
         'pdfFilename',
-        'bodyTemplatePathAndFilenamePattern',
-        'headTemplatePathAndFilenamePattern',
-        'footTemplatePathAndFilenamePattern',
-        'enableLocalFileAccess',
-        'dpi'
     ];
 
     /**
      * @var array
      */
-    public static $optionsToPdfTranslation = [
+    public static array $optionsToPdfTranslation = [
         'orientation' => 'orientation',
         'marginLeft' => 'margin-left',
-        'marginRight' => 'margin-right',
         'marginTop' => 'margin-top',
+        'marginRight' => 'margin-right',
         'marginBottom' => 'margin-bottom',
         'enableLocalFileAccess' => 'enable-local-file-access',
-        'pageSize' => 'page-size',
         'disableSmartShrinking' => 'disable-smart-shrinking',
+        'pageSize' => 'page-size',
         'dpi' => 'dpi',
     ];
 
     /**
-     * @var TemplateView
+     * @var AbstractTemplateView
      */
-    protected $headView;
+    protected AbstractTemplateView $headView;
 
     /**
-     * @var TemplateView
+     * @var AbstractTemplateView
      */
-    protected $bodyView;
+    protected AbstractTemplateView $bodyView;
 
     /**
-     * @var TemplateView
+     * @var AbstractTemplateView
      */
-    protected $footView;
+    protected AbstractTemplateView $footView;
 
     /**
-     * @var Environment
      * @Flow\Inject
+     * @var Environment
      */
     protected $environment;
 
     /**
      * @param array $options
+     * @throws NeosFlowMvcException
+     * @throws NeosFluidAdaptorException
      */
     public function __construct(array $options = [])
     {
         parent::__construct($options);
 
-        $options = [];
-
-        $options['head'] = $this->options;
-        $options['foot'] = $this->options;
-        $options['body'] = $this->options;
-
-        $options['head']['templatePathAndFilenamePattern'] = $options['head']['headTemplatePathAndFilenamePattern'];
-        $options['body']['templatePathAndFilenamePattern'] = $options['body']['bodyTemplatePathAndFilenamePattern'];
-        $options['foot']['templatePathAndFilenamePattern'] = $options['foot']['footTemplatePathAndFilenamePattern'];
-        foreach ($options as &$partOptions) {
-            foreach ($this->blacklistTemplateOptions as $blacklistedOption) {
-                unset($partOptions[$blacklistedOption]);
-            }
+        $templateOptions = $this->options;
+        foreach ($this->blacklistTemplateOptions as $blacklistTemplateOption) {
+            unset($templateOptions[$blacklistTemplateOption]);
         }
 
-        $this->headView = new TemplateView($options['head']);
-        $this->bodyView = new TemplateView($options['body']);
-        $this->footView = new TemplateView($options['foot']);
+        $templateOptionsForPart = [];
+
+        foreach (['head', 'body', 'foot'] as $part) {
+            $partTemplateOptions = $templateOptions;
+            foreach (['templatePathAndFilenamePattern', 'templatePathAndFilename'] as $templatePathAndFilenameOption) {
+                $partTemplateOptions[$templatePathAndFilenameOption] = $this->options[$part . \ucfirst($templatePathAndFilenameOption)];
+            }
+
+            $templateOptionsForPart[$part] = $partTemplateOptions;
+        }
+
+        $this->headView = new TemplateView($templateOptionsForPart['head']);
+        $this->bodyView = new TemplateView($templateOptionsForPart['body']);
+        $this->footView = new TemplateView($templateOptionsForPart['foot']);
     }
 
     /**
-     * @param ControllerContext $controllerContext
-     * @return bool
-     */
-    public function canRender(ControllerContext $controllerContext)
-    {
-        return $this->bodyView->canRender($controllerContext);
-    }
-
-    /**
-     * @return string
+     * @return false|string
+     * @throws FilesException
+     * @throws NeosFlowUtilityException
      */
     public function render()
     {
-        $prefix = uniqid();
-        $tmpPath = $this->environment->getPathToTemporaryDirectory();
-        $fileName = $tmpPath . $prefix . '.pdf';
+        $filename = $this->environment->getPathToTemporaryDirectory() . \uniqid() . '.pdf';
 
-        $this->generateFile($fileName);
+        $this->generateFile($filename);
 
-        $filenameTemplate = new StandaloneView();
-        $filenameTemplate->setTemplateSource($this->options['pdfFilename']);
-        $filenameTemplate->assignMultiple($this->variables);
-        $filenameTemplate->assignMultiple([
-            'controller' => $this->controllerContext->getRequest()->getControllerName(),
-            'action' => $this->controllerContext->getRequest()->getControllerActionName(),
-        ]);
-        $sendFileName = $filenameTemplate->render();
         $this->controllerContext->getResponse()->setComponentParameter(
             SetHeaderComponent::class,
             'Content-Type',
             'application/pdf'
         );
+
         if ($this->options['download']) {
+            $filenameTemplate = new StandaloneView();
+            $filenameTemplate->setTemplateSource($this->options['pdfFilename']);
+            $filenameTemplate->assignMultiple($this->variables);
+            $filenameTemplate->assignMultiple(
+                [
+                    'controller' => $this->controllerContext->getRequest()->getControllerName(),
+                    'action' => $this->controllerContext->getRequest()->getControllerActionName(),
+                ]
+            );
+
             $this->controllerContext->getResponse()->setComponentParameter(
                 SetHeaderComponent::class,
                 'Content-Disposition',
-                sprintf('attachment; filename="%s"', $sendFileName)
+                'attachment; filename="' . $filenameTemplate->render() . '"'
             );
         }
 
-        $content = file_get_contents($fileName);
-        unlink($fileName);
+        $content = \file_get_contents($filename);
+
+        \unlink($filename);
+
         return $content;
     }
 
     /**
      * @param ControllerContext $controllerContext
      */
-    public function setControllerContext(ControllerContext $controllerContext)
+    public function setControllerContext(ControllerContext $controllerContext): void
     {
         parent::setControllerContext($controllerContext);
+
         $this->headView->setControllerContext($controllerContext);
         $this->bodyView->setControllerContext($controllerContext);
         $this->footView->setControllerContext($controllerContext);
     }
 
     /**
-     * @param string $fileName
+     * @param string $filename
+     * @throws FilesException
+     * @throws NeosFlowUtilityException
      */
-    protected function generateFile(string $fileName)
+    protected function generateFile(string $filename): void
     {
         $this->headView->assignMultiple($this->variables);
         $this->bodyView->assignMultiple($this->variables);
         $this->footView->assignMultiple($this->variables);
+
         $tmpPath = $this->environment->getPathToTemporaryDirectory() . '/wkhtmltopdf/';
         Files::createDirectoryRecursively($tmpPath);
-        @symlink(FLOW_PATH_WEB . '/_Resources', $tmpPath . DIRECTORY_SEPARATOR . '_Resources');
+        Files::createRelativeSymlink(\FLOW_PATH_WEB . '/_Resources', $tmpPath . \DIRECTORY_SEPARATOR . '_Resources');
 
         $pdf = new Pdf();
         $pdf->setTemporaryFolder($tmpPath);
 
-        try {
-            $pdf->setOption('header-html', $this->headView->render());
-        } catch (InvalidTemplateResourceException $e) {
-            $pdf->setOption('header-html', null);
+        foreach (static::$optionsToPdfTranslation as $option => $pdfTranslation) {
+            $pdf->setOption($pdfTranslation, $this->options[$option]);
         }
 
         try {
-            $pdf->setOption('footer-html', $this->footView->render());
-        } catch (InvalidTemplateResourceException $e) {
-            $pdf->setOption('footer-html', null);
+            $headerHtml = $this->headView->render();
+        } catch (InvalidTemplateResourceException $exception) {
+            // header is optional, so invalid template is ok
         }
+        $pdf->setOption('header-html', $headerHtml ?? null);
 
-        foreach (static::$optionsToPdfTranslation as $source => $target) {
-            $pdf->setOption($target, $this->options[$source]);
+        try {
+            $footerHtml = $this->footView->render();
+        } catch (InvalidTemplateResourceException $exception) {
+            // footer is optional, so invalid template is ok
         }
+        $pdf->setOption('footer-html', $footerHtml ?? null);
 
-        $pdf->generateFromHtml($this->bodyView->render(), $fileName);
+        $pdf->generateFromHtml($this->bodyView->render(), $filename);
     }
 }
