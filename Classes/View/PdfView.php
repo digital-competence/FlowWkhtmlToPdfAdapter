@@ -30,77 +30,77 @@ class PdfView extends AbstractView
         'templateRootPathPattern' => [
             '@packageResourcesPath/Private/Templates',
             'Pattern to be resolved for "@templateRoot" in the other patterns. Following placeholders are supported: "@packageResourcesPath"',
-            'string'
+            'string',
         ],
         'partialRootPathPattern' => [
             '@packageResourcesPath/Private/Partials',
             'Pattern to be resolved for "@partialRoot" in the other patterns. Following placeholders are supported: "@packageResourcesPath"',
-            'string'
+            'string',
         ],
         'layoutRootPathPattern' => [
             '@packageResourcesPath/Private/Layouts',
             'Pattern to be resolved for "@layoutRoot" in the other patterns. Following placeholders are supported: "@packageResourcesPath"',
-            'string'
+            'string',
         ],
         'templateRootPaths' => [
             [],
             'Path(s) to the template root. If NULL, then $this->options["templateRootPathPattern"] will be used to determine the path',
-            'array'
+            'array',
         ],
         'partialRootPaths' => [
             [],
             'Path(s) to the partial root. If NULL, then $this->options["partialRootPathPattern"] will be used to determine the path',
-            'array'
+            'array',
         ],
         'layoutRootPaths' => [
             [],
             'Path(s) to the layout root. If NULL, then $this->options["layoutRootPathPattern"] will be used to determine the path',
-            'array'
+            'array',
         ],
         'headTemplatePathAndFilenamePattern' => [
             '@templateRoot/@subpackage/@controller/@action.PDFHead.html',
             'File pattern for resolving the template file. Following placeholders are supported: "@templateRoot", "@partialRoot", "@layoutRoot", "@subpackage", "@action", "@format"',
-            'string'
+            'string',
         ],
         'bodyTemplatePathAndFilenamePattern' => [
             '@templateRoot/@subpackage/@controller/@action.PDFBody.html',
             'File pattern for resolving the template file. Following placeholders are supported: "@templateRoot", "@partialRoot", "@layoutRoot", "@subpackage", "@action", "@format"',
-            'string'
+            'string',
         ],
         'footTemplatePathAndFilenamePattern' => [
             '@templateRoot/@subpackage/@controller/@action.PDFFoot.html',
             'File pattern for resolving the template file. Following placeholders are supported: "@templateRoot", "@partialRoot", "@layoutRoot", "@subpackage", "@action", "@format"',
-            'string'
+            'string',
         ],
         'partialPathAndFilenamePattern' => [
             '@partialRoot/@subpackage/@partial.@format',
             'Directory pattern for global partials. Following placeholders are supported: "@templateRoot", "@partialRoot", "@layoutRoot", "@subpackage", "@partial", "@format"',
-            'string'
+            'string',
         ],
         'layoutPathAndFilenamePattern' => [
             '@layoutRoot/@layout.@format',
             'File pattern for resolving the layout. Following placeholders are supported: "@templateRoot", "@partialRoot", "@layoutRoot", "@subpackage", "@layout", "@format"',
-            'string'
+            'string',
         ],
         'headTemplatePathAndFilename' => [
             null,
             'Path and filename of the template file. If set, overrides the headTemplatePathAndFilenamePattern',
-            'string'
+            'string',
         ],
         'bodyTemplatePathAndFilename' => [
             null,
             'Path and filename of the template file. If set, overrides the bodyTemplatePathAndFilenamePattern',
-            'string'
+            'string',
         ],
         'footTemplatePathAndFilename' => [
             null,
             'Path and filename of the template file. If set, overrides the footTemplatePathAndFilenamePattern',
-            'string'
+            'string',
         ],
         'layoutPathAndFilename' => [
             null,
             'Path and filename of the layout file. If set, overrides the layoutPathAndFilenamePattern',
-            'string'
+            'string',
         ],
         'orientation' => ['portrait', 'Orientation of the page.', 'string'],
         'marginLeft' => ['10mm', 'Left margin of the PDF.', 'string'],
