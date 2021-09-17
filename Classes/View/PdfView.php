@@ -24,7 +24,7 @@ use Neos\Utility\Files;
 class PdfView extends AbstractView
 {
     /**
-     * @var array
+     * @inheritDoc
      */
     protected $supportedOptions = [
         'templateRootPathPattern' => [
