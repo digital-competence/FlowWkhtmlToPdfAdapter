@@ -34,7 +34,7 @@ class XvfbUtility
     /**
      * Array of started processes.
      *
-     * @var array
+     * @var Process[]
      */
     protected array $processes = [];
 
@@ -90,7 +90,6 @@ class XvfbUtility
      */
     public function ensureClosed(int $xDisplay): void
     {
-        /* @var Process $process */
         $process = $this->processes[$xDisplay];
         if ($process->isRunning()) {
             $process->stop();
