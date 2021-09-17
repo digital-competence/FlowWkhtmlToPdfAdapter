@@ -193,7 +193,8 @@ class PdfView extends AbstractView
         foreach (['head', 'body', 'foot'] as $part) {
             $partTemplateOptions = $templateOptions;
             foreach (['templatePathAndFilenamePattern', 'templatePathAndFilename'] as $templatePathAndFilenameOption) {
-                $partTemplateOptions[$templatePathAndFilenameOption] = $this->options[$part . \ucfirst($templatePathAndFilenameOption)];
+                $partTemplateOptions[$templatePathAndFilenameOption] =
+                    $this->options[$part . \ucfirst($templatePathAndFilenameOption)];
             }
 
             $templateOptionsForPart[$part] = $partTemplateOptions;
