@@ -30,10 +30,10 @@ class Pdf extends KnpSnappyPdf
     {
         $this->setDefaultExtension('pdf');
 
-        if (\is_null($options)) {
+        if ($options === null) {
             $options = [];
         }
-        if (\is_null($env)) {
+        if ($env === null) {
             $env = [];
         }
 
