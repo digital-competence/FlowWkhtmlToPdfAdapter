@@ -272,7 +272,7 @@ class PdfView extends AbstractView
 
         $tmpPath = $this->environment->getPathToTemporaryDirectory() . '/wkhtmltopdf/';
         Files::createDirectoryRecursively($tmpPath);
-        Files::createRelativeSymlink(\FLOW_PATH_WEB . '/_Resources', $tmpPath . \DIRECTORY_SEPARATOR . '_Resources');
+        Files::createRelativeSymlink(\FLOW_PATH_WEB . '_Resources', $tmpPath . \DIRECTORY_SEPARATOR . '_Resources');
 
         $pdf = new Pdf();
         $pdf->setTemporaryFolder($tmpPath);
