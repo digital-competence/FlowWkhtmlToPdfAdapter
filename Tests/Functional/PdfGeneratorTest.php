@@ -15,10 +15,10 @@ class PdfGeneratorTest extends FunctionalTestCase
      */
     public function testPdfCreation()
     {
-        $name = session_save_path() . '/' . uniqid() . '.pdf';
+        $name = \session_save_path() . '/' . \uniqid() . '.pdf';
         $pdf = new Pdf();
-        file_put_contents($name, $pdf->getOutputFromHtml('<h1>Hello World</h1>'));
+        \file_put_contents($name, $pdf->getOutputFromHtml('<h1>Hello World</h1>'));
         $this->assertFileExists($name);
-        unlink($name);
+        \unlink($name);
     }
 }

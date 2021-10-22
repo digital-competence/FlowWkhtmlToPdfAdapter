@@ -45,7 +45,7 @@ class XvfbUtility
     protected function getFreeXDisplay()
     {
         // TODO: Well this is really optimistic "free" We could check if it is really free with "xset q"
-        return rand($this->minXDisplay, $this->maxXDisplay);
+        return \rand($this->minXDisplay, $this->maxXDisplay);
     }
 
     /**
@@ -54,7 +54,7 @@ class XvfbUtility
     public function startXvfb()
     {
         $xdisplay = $this->getFreeXDisplay();
-        $xvfbProcess = sprintf(
+        $xvfbProcess = \sprintf(
             'exec /usr/bin/Xvfb -screen 0 %s ' . // -dpi ' . $this->dpi .
             ' -terminate -nolisten tcp :%s' . // could configure font-path for X here with -fp
             ' -tst ',
@@ -65,14 +65,14 @@ class XvfbUtility
         $process = $this->createProcess($xvfbProcess);
         $process->start();
         // Wait for first output
-        while (strlen($process->getErrorOutput()) < 5) {
-            usleep(500);
+        while (\strlen($process->getErrorOutput()) < 5) {
+            \usleep(500);
             // IF an error encountered wait until process dies
-            if (strpos($process->getErrorOutput(), '(EE)') !== false) {
+            if (\strpos($process->getErrorOutput(), '(EE)') !== false) {
                 $process->wait();
             }
         }
-        if (! $process->isRunning()) {
+        if (!$process->isRunning()) {
             throw new RuntimeException('X Server could not be started. Error output was: ' . $process->getErrorOutput());
         }
 
@@ -101,7 +101,7 @@ class XvfbUtility
     protected function createProcess(string $command): Process
     {
         // Since symfony/process 4.0 there is a new method for CLI commands with arguments
-        if (method_exists(Process::class, 'fromShellCommandline')) {
+        if (\method_exists(Process::class, 'fromShellCommandline')) {
             $process = Process::fromShellCommandline($command);
         } else {
             $process = new Process($command);

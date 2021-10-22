@@ -16,8 +16,8 @@ class Pdf extends \Knp\Snappy\Pdf
     protected $useXvfb = false;
 
     /**
-     * @var XvfbUtility
      * @Flow\Inject
+     * @var XvfbUtility
      */
     protected $xvfbUtility;
 
@@ -30,10 +30,10 @@ class Pdf extends \Knp\Snappy\Pdf
     {
         $this->setDefaultExtension('pdf');
 
-        if (is_null($options)) {
+        if (\is_null($options)) {
             $options = [];
         }
-        if (is_null($env)) {
+        if (\is_null($env)) {
             $env = [];
         }
 

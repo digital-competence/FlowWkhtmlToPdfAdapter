@@ -27,67 +27,67 @@ class PdfView extends AbstractView
         'templateRootPathPattern' => [
             '@packageResourcesPath/Private/Templates',
             'Pattern to be resolved for "@templateRoot" in the other patterns. Following placeholders are supported: "@packageResourcesPath"',
-            'string'
+            'string',
         ],
         'partialRootPathPattern' => [
             '@packageResourcesPath/Private/Partials',
             'Pattern to be resolved for "@partialRoot" in the other patterns. Following placeholders are supported: "@packageResourcesPath"',
-            'string'
+            'string',
         ],
         'layoutRootPathPattern' => [
             '@packageResourcesPath/Private/Layouts',
             'Pattern to be resolved for "@layoutRoot" in the other patterns. Following placeholders are supported: "@packageResourcesPath"',
-            'string'
+            'string',
         ],
         'templateRootPaths' => [
             [],
             'Path(s) to the template root. If NULL, then $this->options["templateRootPathPattern"] will be used to determine the path',
-            'array'
+            'array',
         ],
         'partialRootPaths' => [
             [],
             'Path(s) to the partial root. If NULL, then $this->options["partialRootPathPattern"] will be used to determine the path',
-            'array'
+            'array',
         ],
         'layoutRootPaths' => [
             [],
             'Path(s) to the layout root. If NULL, then $this->options["layoutRootPathPattern"] will be used to determine the path',
-            'array'
+            'array',
         ],
         'bodyTemplatePathAndFilenamePattern' => [
             '@templateRoot/@subpackage/@controller/@action.PDFBody.html',
             'File pattern for resolving the template file. Following placeholders are supported: "@templateRoot", "@partialRoot", "@layoutRoot", "@subpackage", "@action", "@format"',
-            'string'
+            'string',
         ],
         'footTemplatePathAndFilenamePattern' => [
             '@templateRoot/@subpackage/@controller/@action.PDFFoot.html',
             'File pattern for resolving the template file. Following placeholders are supported: "@templateRoot", "@partialRoot", "@layoutRoot", "@subpackage", "@action", "@format"',
-            'string'
+            'string',
         ],
         'headTemplatePathAndFilenamePattern' => [
             '@templateRoot/@subpackage/@controller/@action.PDFHead.html',
             'File pattern for resolving the template file. Following placeholders are supported: "@templateRoot", "@partialRoot", "@layoutRoot", "@subpackage", "@action", "@format"',
-            'string'
+            'string',
         ],
         'partialPathAndFilenamePattern' => [
             '@partialRoot/@subpackage/@partial.@format',
             'Directory pattern for global partials. Following placeholders are supported: "@templateRoot", "@partialRoot", "@layoutRoot", "@subpackage", "@partial", "@format"',
-            'string'
+            'string',
         ],
         'layoutPathAndFilenamePattern' => [
             '@layoutRoot/@layout.@format',
             'File pattern for resolving the layout. Following placeholders are supported: "@templateRoot", "@partialRoot", "@layoutRoot", "@subpackage", "@layout", "@format"',
-            'string'
+            'string',
         ],
         'templatePathAndFilename' => [
             null,
             'Path and filename of the template file. If set, overrides the templatePathAndFilenamePattern',
-            'string'
+            'string',
         ],
         'layoutPathAndFilename' => [
             null,
             'Path and filename of the layout file. If set, overrides the layoutPathAndFilenamePattern',
-            'string'
+            'string',
         ],
         'orientation' => ['portrait', 'Orientation of the page', 'string'],
         'marginLeft' => ['10mm', 'Left margin of the PDF', 'string'],
@@ -112,7 +112,7 @@ class PdfView extends AbstractView
         'headTemplatePathAndFilenamePattern',
         'footTemplatePathAndFilenamePattern',
         'enableLocalFileAccess',
-        'dpi'
+        'dpi',
     ];
 
     /**
@@ -144,8 +144,8 @@ class PdfView extends AbstractView
     protected $footView;
 
     /**
-     * @var Environment
      * @Flow\Inject
+     * @var Environment
      */
     protected $environment;
 
@@ -190,21 +190,21 @@ class PdfView extends AbstractView
      */
     public function render()
     {
-        $prefix = uniqid();
+        $prefix = \uniqid();
         $tmpPath = $this->environment->getPathToTemporaryDirectory();
         $fileName = $tmpPath . $prefix . '.pdf';
 
         $this->generateFile($fileName);
 
-        $sendFileName = isset($this->variables['pdfFileName']) ? $this->variables['pdfFileName'] : basename($fileName);
+        $sendFileName = isset($this->variables['pdfFileName']) ? $this->variables['pdfFileName'] : \basename($fileName);
         $this->controllerContext->getResponse()->setHeader('Content-Type', 'application/pdf', true);
         $this->controllerContext->getResponse()->setHeader(
             'Content-Disposition',
-            sprintf('attachment; filename="%s"', $sendFileName)
+            \sprintf('attachment; filename="%s"', $sendFileName)
         );
         $this->controllerContext->getResponse()->send();
-        $content = file_get_contents($fileName);
-        unlink($fileName);
+        $content = \file_get_contents($fileName);
+        \unlink($fileName);
         return $content;
     }
 
@@ -229,20 +229,20 @@ class PdfView extends AbstractView
         $this->footView->assignMultiple($this->variables);
         $tmpPath = $this->environment->getPathToTemporaryDirectory() . '/wkhtmltopdf/';
         Files::createDirectoryRecursively($tmpPath);
-        @symlink(FLOW_PATH_WEB . '/_Resources', $tmpPath . DIRECTORY_SEPARATOR . '_Resources');
+        @\symlink(\FLOW_PATH_WEB . '/_Resources', $tmpPath . \DIRECTORY_SEPARATOR . '_Resources');
 
         $pdf = new Pdf();
         $pdf->setTemporaryFolder($tmpPath);
 
         try {
             $pdf->setOption('header-html', $this->headView->render());
-        } catch(InvalidTemplateResourceException $e) {
+        } catch (InvalidTemplateResourceException $e) {
             $pdf->setOption('header-html', null);
         }
 
         try {
             $pdf->setOption('footer-html', $this->footView->render());
-        } catch(InvalidTemplateResourceException $e) {
+        } catch (InvalidTemplateResourceException $e) {
             $pdf->setOption('footer-html', null);
         }
 
