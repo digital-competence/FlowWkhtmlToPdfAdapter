@@ -13,6 +13,7 @@ The `PdfView` connects up to three Fluid templates:
 
 Additionally, you may set ALL options `Knp\Snappy` (an abstraction of wkthmltopdf) understands in your `Views.yaml` to
 configure your `PdfView`:
+
 ```yaml
 -
   requestFilter: "isFormat('pdf')"
