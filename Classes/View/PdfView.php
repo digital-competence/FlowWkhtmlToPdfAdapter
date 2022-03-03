@@ -216,11 +216,7 @@ class PdfView extends AbstractView
 
         $this->generateFile($filename);
 
-        $this->controllerContext->getResponse()->setComponentParameter(
-            SetHeaderComponent::class,
-            'Content-Type',
-            'application/pdf'
-        );
+        $this->controllerContext->getResponse()->setContentType('application/pdf');
 
         if ($this->options['download']) {
             $filenameTemplate = new StandaloneView();
