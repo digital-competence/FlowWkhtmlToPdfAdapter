@@ -4,5 +4,5 @@ DigiComp:
       pdf: "/usr/bin/wkhtmltopdf"
     defaultSettings: ~
     env: ~
-    useXvfb: false
     timeout: 60
+    useXvfb: false
