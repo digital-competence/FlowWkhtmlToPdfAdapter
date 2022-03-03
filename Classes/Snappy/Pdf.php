@@ -41,7 +41,7 @@ class Pdf extends KnpSnappyPdf
     /**
      * @inheritDoc
      */
-    protected function executeCommand($command)
+    protected function executeCommand($command): array
     {
         if ($this->useXvfb) {
             $xDisplay = $this->xvfbUtility->startXvfb();
