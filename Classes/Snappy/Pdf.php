@@ -28,8 +28,6 @@ class Pdf extends KnpSnappyPdf
      */
     public function __construct(?string $binary = null, ?array $options = [], ?array $env = [])
     {
-        $this->setDefaultExtension('pdf');
-
         if ($options === null) {
             $options = [];
         }
