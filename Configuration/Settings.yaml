@@ -3,5 +3,6 @@ DigiComp:
     binary:
       pdf: "/usr/bin/wkhtmltopdf"
     defaultSettings: ~
+    env: ~
     useXvfb: false
     timeout: 60

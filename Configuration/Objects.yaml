@@ -4,6 +4,8 @@ DigiComp\FlowWkhtmlToPdfAdapter\Snappy\Pdf:
       setting: "DigiComp.FlowWkhtmlToPdfAdapter.binary.pdf"
     2:
       setting: "DigiComp.FlowWkhtmlToPdfAdapter.defaultSettings"
+    3:
+      setting: "DigiComp.FlowWkhtmlToPdfAdapter.env"
   properties:
     useXvfb:
       setting: "DigiComp.FlowWkhtmlToPdfAdapter.useXvfb"
