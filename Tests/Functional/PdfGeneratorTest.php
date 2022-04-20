@@ -18,7 +18,7 @@ class PdfGeneratorTest extends FunctionalTestCase
         $name = \session_save_path() . '/' . \uniqid() . '.pdf';
 
         \file_put_contents($name, (new Pdf())->getOutputFromHtml('<h1>Hello World</h1>'));
-        $this->assertFileExists($name);
+        self::assertFileExists($name);
 
         \unlink($name);
     }
