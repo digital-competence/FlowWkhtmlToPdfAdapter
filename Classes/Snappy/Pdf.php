@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace DigiComp\FlowWkhtmlToPdfAdapter\Snappy;
 
 use DigiComp\FlowWkhtmlToPdfAdapter\Xvfb\XvfbUtility;
