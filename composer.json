@@ -1,39 +1,30 @@
 {
     "name": "digicomp/flowwkhtmltopdfadapter",
-    "type": "neos-package",
     "description": "Using pdf/snappy for a nice integration of wkhtmltopdf as ViewInterface",
-    "authors": [
-        {
-            "name": "Ferdinand Kuhl",
-            "email": "f.kuhl@digital-competence.de",
-            "homepage": "http://www.digital-competence.de",
-            "role": "Developer"
-        }
-    ],
-    "license": "MIT",
-    "homepage": "https://github.com/fcool/DigiComp.SettingValidator",
-    "keywords": [
-        "Flow",
-        "wkhtmlttopdf",
-        "pdf"
-    ],
+    "type": "neos-package",
     "require": {
-        "neos/flow": "~6.3",
-        "knplabs/knp-snappy": "~1.0",
-        "symfony/process": "~4.0|~5.0",
+        "neos/flow": "^6.3.0",
+        "knplabs/knp-snappy": "^1.0.0",
+        "symfony/process": "^4.0.0 || ^5.0.0",
         "php": ">=7.4"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "~8.5"
     },
     "autoload": {
         "psr-4": {
-            "DigiComp\\FlowWkhtmlToPdfAdapter\\": "Classes"
+            "DigiComp\\FlowWkhtmlToPdfAdapter\\": "Classes/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Inwebs\\FlowWkhtmlToPdfAdapter\\Tests\\": "Tests"
+            "Inwebs\\FlowWkhtmlToPdfAdapter\\Tests\\": "Tests/"
         }
     },
     "extra": {
+        "neos": {
+            "package-key": "DigiComp.FlowWkhtmlToPdfAdapter"
+        },
         "branch-alias": {
             "dev-develop": "3.0.x-dev",
             "dev-version/2.x-dev": "2.3.x-dev",
@@ -71,7 +62,25 @@
             "Neos.Flow-20170125103800",
             "Neos.Flow-20170127183102",
             "DigiComp.SettingValidator-20170603120900",
-            "Neos.Flow-20180415105700"
+            "Neos.Flow-20180415105700",
+            "Neos.Flow-20190425144900",
+            "Neos.Flow-20190515215000"
         ]
-    }
+    },
+    "authors": [
+        {
+            "name": "Ferdinand Kuhl",
+            "email": "f.kuhl@digital-competence.de",
+            "homepage": "https://www.digital-competence.de",
+            "role": "Developer"
+        }
+    ],
+    "license": "MIT",
+    "homepage": "https://github.com/digital-competence/FlowWkhtmlToPdfAdapter",
+    "keywords": [
+        "Neos",
+        "Flow",
+        "wkhtmlttopdf",
+        "pdf"
+    ]
 }

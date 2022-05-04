@@ -1,15 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 namespace DigiComp\FlowWkhtmlToPdfAdapter\Snappy;
 
 use DigiComp\FlowWkhtmlToPdfAdapter\Xvfb\XvfbUtility;
-use Knp\Snappy\AbstractGenerator;
+use Knp\Snappy\Pdf as KnpSnappyPdf;
 use Neos\Flow\Annotations as Flow;
 
-class Pdf extends \Knp\Snappy\Pdf
+class Pdf extends KnpSnappyPdf
 {
     /**
-     * should Xvfb be used during executeCommand
+     * If Xvfb should be used during executeCommand.
      *
      * @var bool
      */
@@ -22,41 +24,31 @@ class Pdf extends \Knp\Snappy\Pdf
     protected $xvfbUtility;
 
     /**
-     * @param string $binary
+     * @param string|null $binary
      * @param array $options
-     * @param array $env
+     * @param array|null $env
      */
-    public function __construct($binary = null, $options = [], $env = [])
+    public function __construct(?string $binary = null, array $options = [], array $env = null)
     {
-        $this->setDefaultExtension('pdf');
-
-        if (is_null($options)) {
-            $options = [];
-        }
-        if (is_null($env)) {
-            $env = [];
-        }
-
         parent::__construct($binary, $options, $env);
     }
 
     /**
      * @inheritDoc
      */
-    protected function executeCommand($command)
+    protected function executeCommand($command): array
     {
-        $display = '';
         if ($this->useXvfb) {
-            $display = $this->xvfbUtility->startXvfb();
-            $command = 'DISPLAY=:' . $display . ' ' . $command;
+            $xDisplay = $this->xvfbUtility->startXvfb();
+            $command = 'DISPLAY=:' . $xDisplay . ' ' . $command;
         }
 
-        $returnArray = parent::executeCommand($command);
+        $result = parent::executeCommand($command);
 
-        if ($this->useXvfb && $display) {
-            $this->xvfbUtility->ensureClosed($display);
+        if ($this->useXvfb) {
+            $this->xvfbUtility->ensureClosed($xDisplay);
         }
 
-        return $returnArray;
+        return $result;
     }
 }

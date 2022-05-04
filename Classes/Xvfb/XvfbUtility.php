@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace DigiComp\FlowWkhtmlToPdfAdapter\Xvfb;
 
 use Neos\Flow\Annotations as Flow;
@@ -11,30 +13,30 @@ use Symfony\Component\Process\Process;
 class XvfbUtility
 {
     /**
-     * Resoution of the virtual frame buffer
+     * Resolution of the virtual frame buffer.
      *
      * @var string
      */
     protected string $resolution = '1024x768x24';
 
     /**
-     * Minimal X Display number
+     * Minimal X display number.
      *
      * @var int
      */
     protected int $minXDisplay = 20;
 
     /**
-     * Maximum X Display number
+     * Maximum X display number.
      *
      * @var int
      */
     protected int $maxXDisplay = 500;
 
     /**
-     * Array of started processes
+     * Array of started processes.
      *
-     * @var array
+     * @var Process[]
      */
     protected array $processes = [];
 
@@ -43,8 +45,8 @@ class XvfbUtility
      */
     protected function getFreeXDisplay(): int
     {
-        // TODO: Well this is really optimistic "free" We could check if it is really free with "xset q"
-        return rand($this->minXDisplay, $this->maxXDisplay);
+        // TODO: Well this is really optimistic "free". We could check if it is really free with "xset q".
+        return \rand($this->minXDisplay, $this->maxXDisplay);
     }
 
     /**
@@ -52,43 +54,45 @@ class XvfbUtility
      */
     public function startXvfb(): int
     {
-        $xdisplay = $this->getFreeXDisplay();
-        $xvfbProcess = sprintf(
-            'exec /usr/bin/Xvfb -screen 0 %s ' . // -dpi ' . $this->dpi .
-            ' -terminate -nolisten tcp :%s' . // could configure font-path for X here with -fp
-            ' -tst ',
-            $this->resolution,
-            $xdisplay
-        );
+        $xDisplay = $this->getFreeXDisplay();
 
-        $process = Process::fromShellCommandline($xvfbProcess);
+        $process = Process::fromShellCommandline(
+            \sprintf(
+                'exec /usr/bin/Xvfb -screen 0 %s ' . // -dpi ' . $this->dpi .
+                ' -terminate -nolisten tcp :%s' . // could configure font-path for X here with -fp
+                ' -tst ',
+                $this->resolution,
+                $xDisplay
+            )
+        );
         $process->start();
-        // Wait for first output
-        while (strlen($process->getErrorOutput()) < 5) {
-            usleep(500);
-            // IF an error encountered wait until process dies
-            if (strpos($process->getErrorOutput(), '(EE)') !== false) {
+
+        // wait for first output
+        while (\strlen($process->getErrorOutput()) < 5) {
+            \usleep(500);
+            // if an error encountered, wait until process dies
+            if (\strpos($process->getErrorOutput(), '(EE)') !== false) {
                 $process->wait();
             }
         }
-        if (! $process->isRunning()) {
+        if (!$process->isRunning()) {
             throw new \RuntimeException(
-                'X Server could not be started. Error output was: ' . $process->getErrorOutput()
+                'X Server could not be started. Error output was: ' . $process->getErrorOutput(),
+                1631264336
             );
         }
 
-        $this->processes[$xdisplay] = $process;
+        $this->processes[$xDisplay] = $process;
 
-        return $xdisplay;
+        return $xDisplay;
     }
 
     /**
-     * @param int $display
+     * @param int $xDisplay
      */
-    public function ensureClosed(int $display): void
+    public function ensureClosed(int $xDisplay): void
     {
-        /* @var Process $process */
-        $process = $this->processes[$display];
+        $process = $this->processes[$xDisplay];
         if ($process->isRunning()) {
             $process->stop();
         }

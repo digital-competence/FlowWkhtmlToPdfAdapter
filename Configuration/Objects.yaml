@@ -1,11 +1,13 @@
 DigiComp\FlowWkhtmlToPdfAdapter\Snappy\Pdf:
   arguments:
     1:
-      setting: 'DigiComp.FlowWkhtmlToPdfAdapter.binary.pdf'
+      setting: "DigiComp.FlowWkhtmlToPdfAdapter.binary"
     2:
-      setting: 'DigiComp.FlowWkhtmlToPdfAdapter.defaultSettings'
+      setting: "DigiComp.FlowWkhtmlToPdfAdapter.options"
+    3:
+      setting: "DigiComp.FlowWkhtmlToPdfAdapter.env"
   properties:
-    useXvfb:
-      setting: 'DigiComp.FlowWkhtmlToPdfAdapter.useXvfb'
     timeout:
-      setting: 'DigiComp.FlowWkhtmlToPdfAdapter.timeout'
+      setting: "DigiComp.FlowWkhtmlToPdfAdapter.timeout"
+    useXvfb:
+      setting: "DigiComp.FlowWkhtmlToPdfAdapter.useXvfb"
