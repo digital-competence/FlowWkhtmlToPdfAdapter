@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace DigiComp\FlowWkhtmlToPdfAdapter\Xvfb;
 
 use Neos\Flow\Annotations as Flow;

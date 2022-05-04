@@ -1,8 +1,7 @@
 DigiComp:
   FlowWkhtmlToPdfAdapter:
-    binary:
-      pdf: "/usr/bin/wkhtmltopdf"
-    defaultSettings: ~
+    binary: "/usr/bin/wkhtmltopdf"
+    options: {}
     env: ~
     timeout: 60
     useXvfb: false

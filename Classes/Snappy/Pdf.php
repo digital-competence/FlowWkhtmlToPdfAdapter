@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace DigiComp\FlowWkhtmlToPdfAdapter\Snappy;
 
 use DigiComp\FlowWkhtmlToPdfAdapter\Xvfb\XvfbUtility;
@@ -23,18 +25,11 @@ class Pdf extends KnpSnappyPdf
 
     /**
      * @param string|null $binary
-     * @param array|null $options
+     * @param array $options
      * @param array|null $env
      */
-    public function __construct(?string $binary = null, ?array $options = [], ?array $env = [])
+    public function __construct(?string $binary = null, array $options = [], array $env = null)
     {
-        if ($options === null) {
-            $options = [];
-        }
-        if ($env === null) {
-            $env = [];
-        }
-
         parent::__construct($binary, $options, $env);
     }
 
