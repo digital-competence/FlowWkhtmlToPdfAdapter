@@ -6,7 +6,7 @@ namespace DigiComp\FlowWkhtmlToPdfAdapter\View;
 
 use DigiComp\FlowWkhtmlToPdfAdapter\Snappy\Pdf;
 use Neos\Flow\Annotations as Flow;
-use Neos\Flow\Http\Component\SetHeaderComponent;
+
 use Neos\Flow\Mvc\Controller\ControllerContext;
 use Neos\Flow\Mvc\Exception as NeosFlowMvcException;
 use Neos\Flow\Mvc\View\AbstractView;
