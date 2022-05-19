@@ -231,8 +231,7 @@ class PdfView extends AbstractView
                 ]
             );
 
-            $this->controllerContext->getResponse()->setComponentParameter(
-                SetHeaderComponent::class,
+            $this->controllerContext->getResponse()->addHttpHeader(
                 'Content-Disposition',
                 'attachment; filename="' . $filenameTemplate->render() . '"'
             );
