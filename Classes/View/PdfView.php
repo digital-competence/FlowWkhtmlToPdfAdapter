@@ -94,6 +94,7 @@ class PdfView extends AbstractView
         'marginTop' => ['10mm', 'Left margin of the PDF', 'string'],
         'marginRight' => ['10mm', 'Left margin of the PDF', 'string'],
         'marginBottom' => ['10mm', 'Left margin of the PDF', 'string'],
+        'disableSmartShrinking' => [false, 'Disable smart-shrinking.', 'bool'],
         // @deprecated, will change to false in next major
         'enableLocalFileAccess' => [true, 'Allow local file access', 'bool'],
         'dpi' => [96, 'Resolution of the PDF', 'int'],
@@ -111,6 +112,7 @@ class PdfView extends AbstractView
         'bodyTemplatePathAndFilenamePattern',
         'headTemplatePathAndFilenamePattern',
         'footTemplatePathAndFilenamePattern',
+        'disableSmartShrinking',
         'enableLocalFileAccess',
         'dpi',
     ];
@@ -124,6 +126,7 @@ class PdfView extends AbstractView
         'marginRight' => 'margin-right',
         'marginTop' => 'margin-top',
         'marginBottom' => 'margin-bottom',
+        'disableSmartShrinking' => 'disable-smart-shrinking',
         'enableLocalFileAccess' => 'enable-local-file-access',
         'dpi' => 'dpi',
     ];
