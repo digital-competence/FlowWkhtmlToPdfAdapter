@@ -233,7 +233,9 @@ class PdfView extends AbstractView
 
             $this->controllerContext->getResponse()->addHttpHeader(
                 'Content-Disposition',
-                'attachment; filename="' . $filenameTemplate->render() . '"'
+                'attachment; '
+                    . 'filename*=utf-8\'\'' . \rawurlencode($filenameTemplate->render()) . '; '
+                    . 'filename="' . \addslashes(\utf8_decode($filenameTemplate->render())) . '"',
             );
         }
 
