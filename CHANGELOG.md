@@ -4,7 +4,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [5.0.0]
+### Changed
+- now compatible to Flow 7.3 (this breaks, because of changed framework API, the old SetHeaderComponent not longer exists)
+
+## [4.0.0]
 ### Added
 - PdfView-Options
     - `headTemplatePathAndFilename` (allows setting `templatePathAndFilename` for `$headView`)
