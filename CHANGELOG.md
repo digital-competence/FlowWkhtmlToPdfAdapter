@@ -8,6 +8,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - now compatible to Flow 7.3 (this breaks, because of changed framework API, the old SetHeaderComponent not longer exists)
 
+## [4.1.0]
+### Added
+- Added CreatePdfFromContentExportTrait in order to be able to create and export a pdf with HTML content inside any class.
+
 ## [4.0.0]
 ### Added
 - PdfView-Options
