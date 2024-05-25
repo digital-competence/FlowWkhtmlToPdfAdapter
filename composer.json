@@ -3,10 +3,10 @@
     "description": "Using pdf/snappy for a nice integration of wkhtmltopdf as ViewInterface",
     "type": "neos-package",
     "require": {
-        "neos/flow": "^7.3.0",
+        "neos/flow": "^7.3.0 | ^8.2",
         "knplabs/knp-snappy": "^1.0.0",
-        "symfony/process": "^4.0.0 || ^5.0.0",
-        "php": ">=7.4 | ^8.1"
+        "symfony/process": "^4.0.0 | ^5.0.0 | ^6.0.0",
+        "php": ">=7.4"
     },
     "require-dev": {
         "phpunit/phpunit": "~8.5"
@@ -27,6 +27,7 @@
         },
         "branch-alias": {
             "dev-develop": "5.0.x-dev",
+            "dev-version/4.x-dev": "4.1.x-dev",
             "dev-version/2.x-dev": "2.3.x-dev",
             "dev-version/1.x-dev": "1.2.x-dev"
         },
