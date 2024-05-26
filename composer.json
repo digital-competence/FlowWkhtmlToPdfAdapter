@@ -26,7 +26,7 @@
             "package-key": "DigiComp.FlowWkhtmlToPdfAdapter"
         },
         "branch-alias": {
-            "dev-develop": "5.0.x-dev",
+            "dev-develop": "5.1.x-dev",
             "dev-version/4.x-dev": "4.1.x-dev",
             "dev-version/2.x-dev": "2.3.x-dev",
             "dev-version/1.x-dev": "1.2.x-dev"
